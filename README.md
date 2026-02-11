@@ -160,4 +160,4 @@ This project references and follows the structure/philosophy of:
 
 ## License
 
-Use the license configured in this repository.
+[MIT License](./LICENSE)
