@@ -4,7 +4,7 @@
 
 [English](./README.md) | [中文](./README_zh.md)
 
-This repository extends `shareAI-lab/learn-claude-code` with OpenAI SDK-specific implementations.
+This repository extends [shareAI-lab/learn-claude-code](https://github.com/shareAI-lab/learn-claude-code) with OpenAI SDK-specific implementations.
 
 ## What is added in this repo
 
@@ -26,6 +26,7 @@ pip install -e ".[logfire]"
 # or without logfire:
 # pip install -e .
 ```
+[logfire](https://logfire.pydantic.dev/docs/) doc
 
 Run examples:
 
