@@ -72,8 +72,16 @@ load_dotenv(override=True)
 
 WORKDIR = Path.cwd()
 
-client = OpenAI(base_url=os.getenv("OPENAI_BASE_URL"))
+client = None
 MODEL = os.getenv("MODEL_ID", "gpt-4o")
+
+
+def get_client():
+    """Lazily create the OpenAI client to avoid import-time API key errors."""
+    global client
+    if client is None:
+        client = OpenAI(base_url=os.getenv("OPENAI_BASE_URL"))
+    return client
 
 
 # =============================================================================
@@ -459,7 +467,7 @@ Complete the task and return a clear, concise summary."""
 
     # Run the same agent loop (silently - don't print to main chat)
     while True:
-        response = client.chat.completions.create(
+        response = get_client().chat.completions.create(
             model=MODEL,
             messages=sub_messages,
             tools=sub_tools,
@@ -545,7 +553,7 @@ def agent_loop(messages: list) -> list:
     When model calls Task, it spawns a subagent with isolated context.
     """
     while True:
-        response = client.chat.completions.create(
+        response = get_client().chat.completions.create(
             model=MODEL,
             messages=[{"role": "system", "content": SYSTEM}] + messages,
             tools=ALL_TOOLS,

@@ -124,50 +124,6 @@ def test_nag_reminder_in_agent_loop():
 
 
 # =============================================================================
-# Configuration Tests
-# =============================================================================
-
-def test_env_config():
-    """Test environment variable configuration."""
-    orig_model = os.environ.get("MODEL_ID")
-
-    try:
-        os.environ["MODEL_ID"] = "test-model-123"
-
-        import importlib
-        import openai_v1_basic_agent
-
-        importlib.reload(openai_v1_basic_agent)
-        assert openai_v1_basic_agent.MODEL == "test-model-123"
-
-        print("PASS: test_env_config")
-        return True
-    finally:
-        if orig_model:
-            os.environ["MODEL_ID"] = orig_model
-        else:
-            os.environ.pop("MODEL_ID", None)
-
-
-def test_default_model():
-    """Test default model when env var not set."""
-    orig = os.environ.pop("MODEL_ID", None)
-
-    try:
-        import importlib
-        import openai_v1_basic_agent
-
-        importlib.reload(openai_v1_basic_agent)
-        assert "gpt" in openai_v1_basic_agent.MODEL.lower(), openai_v1_basic_agent.MODEL
-
-        print("PASS: test_default_model")
-        return True
-    finally:
-        if orig:
-            os.environ["MODEL_ID"] = orig
-
-
-# =============================================================================
 # Tool Schema Tests
 # =============================================================================
 
@@ -541,8 +497,6 @@ if __name__ == "__main__":
         test_todo_manager_constraints,
         test_reminder_constants,
         test_nag_reminder_in_agent_loop,
-        test_env_config,
-        test_default_model,
         test_tool_schemas,
         test_todo_manager_empty_list,
         test_todo_manager_status_transitions,

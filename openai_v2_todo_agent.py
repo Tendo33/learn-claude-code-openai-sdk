@@ -70,8 +70,16 @@ load_dotenv(override=True)
 
 WORKDIR = Path.cwd()
 
-client = OpenAI(base_url=os.getenv("OPENAI_BASE_URL"))
+client = None
 MODEL = os.getenv("MODEL_ID", "gpt-4o")
+
+
+def get_client():
+    """Lazily create the OpenAI client to avoid import-time API key errors."""
+    global client
+    if client is None:
+        client = OpenAI(base_url=os.getenv("OPENAI_BASE_URL"))
+    return client
 
 
 # =============================================================================
@@ -425,7 +433,7 @@ def agent_loop(messages: list) -> list:
         if rounds_without_todo > 10:
             system_messages.append({"role": "system", "content": NAG_REMINDER})
 
-        response = client.chat.completions.create(
+        response = get_client().chat.completions.create(
             model=MODEL,
             messages=system_messages + messages,
             tools=TOOLS,
