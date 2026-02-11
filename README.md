@@ -68,6 +68,14 @@ Or with pip:
 pip install openai python-dotenv
 ```
 
+Optional (enable Logfire):
+
+```bash
+uv sync --extra logfire
+# or
+pip install ".[logfire]"
+```
+
 ### 2) Configure environment
 
 ```bash
@@ -80,6 +88,8 @@ Edit `.env`:
 OPENAI_API_KEY=sk-xxx
 # OPENAI_BASE_URL=https://api.openai.com/v1
 # MODEL_ID=gpt-4o
+# ENABLE_LOGFIRE=true
+# LOGFIRE_TOKEN=your-logfire-write-token
 ```
 
 ### 3) Run agents

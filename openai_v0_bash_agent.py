@@ -64,7 +64,10 @@ import sys
 from dotenv import load_dotenv
 from openai import OpenAI
 
+from utils.logfire_config import configure_logfire
+
 load_dotenv(override=True)
+configure_logfire()
 
 # Initialize OpenAI client (uses OPENAI_API_KEY and OPENAI_BASE_URL env vars)
 client = OpenAI(base_url=os.getenv("OPENAI_BASE_URL"))

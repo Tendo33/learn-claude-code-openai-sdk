@@ -69,6 +69,14 @@ uv sync
 pip install openai python-dotenv
 ```
 
+可选（启用 Logfire）：
+
+```bash
+uv sync --extra logfire
+# 或
+pip install ".[logfire]"
+```
+
 ### 2) 配置环境变量
 
 ```bash
@@ -81,6 +89,8 @@ cp .env.example .env
 OPENAI_API_KEY=sk-xxx
 # OPENAI_BASE_URL=https://api.openai.com/v1
 # MODEL_ID=gpt-4o
+# ENABLE_LOGFIRE=true
+# LOGFIRE_TOKEN=your-logfire-write-token
 ```
 
 ### 3) 运行各版本 agent

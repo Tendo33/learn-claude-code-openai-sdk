@@ -9,7 +9,10 @@ import sys
 from dotenv import load_dotenv
 from openai import OpenAI
 
+from utils.logfire_config import configure_logfire
+
 load_dotenv(override=True)
+configure_logfire()
 C = OpenAI(base_url=os.getenv("OPENAI_BASE_URL"))
 M = os.getenv("MODEL_ID", "gpt-4o")
 T = [

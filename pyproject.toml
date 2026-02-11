@@ -8,3 +8,8 @@ dependencies = [
     "openai>=2.20.0",
     "python-dotenv>=1.2.1",
 ]
+
+[project.optional-dependencies]
+logfire = [
+    "logfire",
+]

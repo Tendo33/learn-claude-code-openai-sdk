@@ -61,7 +61,10 @@ from pathlib import Path
 from dotenv import load_dotenv
 from openai import OpenAI
 
+from utils.logfire_config import configure_logfire
+
 load_dotenv(override=True)
+configure_logfire()
 
 
 # =============================================================================
