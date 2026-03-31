@@ -5,7 +5,7 @@ __pycache__/
 .history/
 # C extensions
 *.so
-
+_reference_repo
 # Distribution / packaging
 .Python
 build/
