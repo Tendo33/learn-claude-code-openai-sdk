@@ -270,7 +270,7 @@ def agent_loop(messages: list):
 
 if __name__ == "__main__":
     history = []
-    print(f"s06 - Context Compact (OpenAI SDK)")
+    print("s06 - Context Compact (OpenAI SDK)")
     print("Type 'exit' or 'q' to quit.\n")
     while True:
         try:

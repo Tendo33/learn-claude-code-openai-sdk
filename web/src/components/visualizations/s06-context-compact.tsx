@@ -32,7 +32,8 @@ function generateBlocks(count: number, seed: number): ContextBlock[] {
   for (let i = 0; i < count; i++) {
     const typeIndex = (i + seed) % 3;
     const type = types[typeIndex];
-    const tokens = type === "tool_result" ? 4000 + (i % 3) * 1000 : 1500 + (i % 4) * 500;
+    const tokens =
+      type === "tool_result" ? 4000 + (i % 3) * 1000 : 1500 + (i % 4) * 500;
     blocks.push({
       id: `b-${seed}-${i}`,
       type,
@@ -47,7 +48,13 @@ const MAX_TOKENS = 100000;
 const WINDOW_HEIGHT = 350;
 
 interface StepState {
-  blocks: { id: string; type: BlockType; label: string; heightPx: number; compressed?: boolean }[];
+  blocks: {
+    id: string;
+    type: BlockType;
+    label: string;
+    heightPx: number;
+    compressed?: boolean;
+  }[];
   tokenCount: number;
   fillPercent: number;
   compressionLabel: string | null;
@@ -61,7 +68,10 @@ function computeStepState(step: number): StepState {
       const totalRawTokens = raw.reduce((a, b) => a + b.tokens, 0);
       const blocks = raw.map((b) => ({
         ...b,
-        heightPx: Math.max(16, (b.tokens / totalRawTokens) * WINDOW_HEIGHT * 0.3),
+        heightPx: Math.max(
+          16,
+          (b.tokens / totalRawTokens) * WINDOW_HEIGHT * 0.3
+        ),
       }));
       return { blocks, tokenCount, fillPercent: 30, compressionLabel: null };
     }
@@ -71,7 +81,10 @@ function computeStepState(step: number): StepState {
       const totalRawTokens = raw.reduce((a, b) => a + b.tokens, 0);
       const blocks = raw.map((b) => ({
         ...b,
-        heightPx: Math.max(12, (b.tokens / totalRawTokens) * WINDOW_HEIGHT * 0.6),
+        heightPx: Math.max(
+          12,
+          (b.tokens / totalRawTokens) * WINDOW_HEIGHT * 0.6
+        ),
       }));
       return { blocks, tokenCount, fillPercent: 60, compressionLabel: null };
     }
@@ -81,7 +94,10 @@ function computeStepState(step: number): StepState {
       const totalRawTokens = raw.reduce((a, b) => a + b.tokens, 0);
       const blocks = raw.map((b) => ({
         ...b,
-        heightPx: Math.max(10, (b.tokens / totalRawTokens) * WINDOW_HEIGHT * 0.8),
+        heightPx: Math.max(
+          10,
+          (b.tokens / totalRawTokens) * WINDOW_HEIGHT * 0.8
+        ),
       }));
       return { blocks, tokenCount, fillPercent: 80, compressionLabel: null };
     }
@@ -110,7 +126,10 @@ function computeStepState(step: number): StepState {
       const totalRawTokens = raw.reduce((a, b) => a + b.tokens, 0);
       const blocks = raw.map((b) => ({
         ...b,
-        heightPx: Math.max(10, (b.tokens / totalRawTokens) * WINDOW_HEIGHT * 0.85),
+        heightPx: Math.max(
+          10,
+          (b.tokens / totalRawTokens) * WINDOW_HEIGHT * 0.85
+        ),
       }));
       return { blocks, tokenCount, fillPercent: 85, compressionLabel: null };
     }
@@ -151,7 +170,12 @@ function computeStepState(step: number): StepState {
       };
     }
     default:
-      return { blocks: [], tokenCount: 0, fillPercent: 0, compressionLabel: null };
+      return {
+        blocks: [],
+        tokenCount: 0,
+        fillPercent: 0,
+        compressionLabel: null,
+      };
   }
 }
 
@@ -178,8 +202,7 @@ const STEPS = [
   },
   {
     title: "Still Growing",
-    description:
-      "Work continues. Context grows again toward the threshold...",
+    description: "Work continues. Context grows again toward the threshold...",
   },
   {
     title: "Stage 2: Auto-Compact",
@@ -202,7 +225,10 @@ export default function ContextCompact({ title }: { title?: string }) {
     reset,
     isPlaying,
     toggleAutoPlay,
-  } = useSteppedVisualization({ totalSteps: STEPS.length, autoPlayInterval: 2500 });
+  } = useSteppedVisualization({
+    totalSteps: STEPS.length,
+    autoPlayInterval: 2500,
+  });
 
   const state = useMemo(() => computeStepState(currentStep), [currentStep]);
 
@@ -287,9 +313,7 @@ export default function ContextCompact({ title }: { title?: string }) {
             >
               {tokenDisplay}
             </motion.div>
-            <div className="font-mono text-[10px] text-zinc-400">
-              / 100K
-            </div>
+            <div className="font-mono text-[10px] text-zinc-400">/ 100K</div>
           </div>
 
           {/* Right side: state display and compression stage */}
@@ -301,7 +325,8 @@ export default function ContextCompact({ title }: { title?: string }) {
                   Token usage
                 </span>
                 <span className="font-mono text-xs text-zinc-500">
-                  {state.tokenCount.toLocaleString()} / {MAX_TOKENS.toLocaleString()}
+                  {state.tokenCount.toLocaleString()} /{" "}
+                  {MAX_TOKENS.toLocaleString()}
                 </span>
               </div>
               <div className="h-3 overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
@@ -317,15 +342,21 @@ export default function ContextCompact({ title }: { title?: string }) {
             <div className="mt-4 flex items-center gap-4">
               <div className="flex items-center gap-1">
                 <div className="h-3 w-3 rounded bg-blue-500" />
-                <span className="text-[10px] text-zinc-500 dark:text-zinc-400">user</span>
+                <span className="text-[10px] text-zinc-500 dark:text-zinc-400">
+                  user
+                </span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="h-3 w-3 rounded bg-zinc-500" />
-                <span className="text-[10px] text-zinc-500 dark:text-zinc-400">assistant</span>
+                <span className="text-[10px] text-zinc-500 dark:text-zinc-400">
+                  assistant
+                </span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="h-3 w-3 rounded bg-emerald-500" />
-                <span className="text-[10px] text-zinc-500 dark:text-zinc-400">tool_result</span>
+                <span className="text-[10px] text-zinc-500 dark:text-zinc-400">
+                  tool_result
+                </span>
               </div>
             </div>
 
@@ -342,7 +373,8 @@ export default function ContextCompact({ title }: { title?: string }) {
                     tool_results are the largest blocks
                   </div>
                   <div className="text-[11px] text-amber-600 dark:text-amber-400">
-                    File contents, command outputs, search results -- each one is thousands of tokens.
+                    File contents, command outputs, search results -- each one
+                    is thousands of tokens.
                   </div>
                 </motion.div>
               )}
@@ -358,32 +390,41 @@ export default function ContextCompact({ title }: { title?: string }) {
                   transition={{ duration: 0.4 }}
                   className="mt-4"
                 >
-                  <div className={`rounded-lg border-2 p-4 text-center ${
-                    currentStep === 3
-                      ? "border-amber-400 bg-amber-50 dark:border-amber-600 dark:bg-amber-900/20"
-                      : currentStep === 5
-                        ? "border-blue-400 bg-blue-50 dark:border-blue-600 dark:bg-blue-900/20"
-                        : "border-emerald-400 bg-emerald-50 dark:border-emerald-600 dark:bg-emerald-900/20"
-                  }`}>
-                    <div className={`text-lg font-black ${
+                  <div
+                    className={`rounded-lg border-2 p-4 text-center ${
                       currentStep === 3
-                        ? "text-amber-600 dark:text-amber-300"
+                        ? "border-amber-400 bg-amber-50 dark:border-amber-600 dark:bg-amber-900/20"
                         : currentStep === 5
-                          ? "text-blue-600 dark:text-blue-300"
-                          : "text-emerald-600 dark:text-emerald-300"
-                    }`}>
+                          ? "border-blue-400 bg-blue-50 dark:border-blue-600 dark:bg-blue-900/20"
+                          : "border-emerald-400 bg-emerald-50 dark:border-emerald-600 dark:bg-emerald-900/20"
+                    }`}
+                  >
+                    <div
+                      className={`text-lg font-black ${
+                        currentStep === 3
+                          ? "text-amber-600 dark:text-amber-300"
+                          : currentStep === 5
+                            ? "text-blue-600 dark:text-blue-300"
+                            : "text-emerald-600 dark:text-emerald-300"
+                      }`}
+                    >
                       {state.compressionLabel}
                     </div>
-                    <div className={`mt-1 text-xs ${
-                      currentStep === 3
-                        ? "text-amber-500 dark:text-amber-400"
-                        : currentStep === 5
-                          ? "text-blue-500 dark:text-blue-400"
-                          : "text-emerald-500 dark:text-emerald-400"
-                    }`}>
-                      {currentStep === 3 && "Old tool_results shrunk to tiny summaries"}
-                      {currentStep === 5 && "Full conversation compressed to summary block"}
-                      {currentStep === 6 && "Most aggressive compression -- near-empty context"}
+                    <div
+                      className={`mt-1 text-xs ${
+                        currentStep === 3
+                          ? "text-amber-500 dark:text-amber-400"
+                          : currentStep === 5
+                            ? "text-blue-500 dark:text-blue-400"
+                            : "text-emerald-500 dark:text-emerald-400"
+                      }`}
+                    >
+                      {currentStep === 3 &&
+                        "Old tool_results shrunk to tiny summaries"}
+                      {currentStep === 5 &&
+                        "Full conversation compressed to summary block"}
+                      {currentStep === 6 &&
+                        "Most aggressive compression -- near-empty context"}
                     </div>
                   </div>
                 </motion.div>

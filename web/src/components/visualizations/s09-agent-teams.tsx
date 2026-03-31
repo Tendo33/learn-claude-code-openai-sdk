@@ -14,7 +14,13 @@ const AGENT_R = 40;
 const AGENTS = [
   { id: "lead", label: "Lead", cx: SVG_W / 2, cy: 70, inbox: "lead.jsonl" },
   { id: "coder", label: "Coder", cx: 140, cy: 230, inbox: "coder.jsonl" },
-  { id: "reviewer", label: "Reviewer", cx: SVG_W - 140, cy: 230, inbox: "reviewer.jsonl" },
+  {
+    id: "reviewer",
+    label: "Reviewer",
+    cx: SVG_W - 140,
+    cy: 230,
+    inbox: "reviewer.jsonl",
+  },
 ] as const;
 
 // Inbox tray dimensions, positioned below each agent circle
@@ -37,13 +43,34 @@ function trayCenter(id: string) {
 
 // Step configuration
 const STEPS = [
-  { title: "The Team", desc: "Teams use a leader-worker pattern. Each teammate has a file-based mailbox inbox." },
-  { title: "Lead Assigns Work", desc: "Communication is async: write a message to the recipient's .jsonl inbox file." },
-  { title: "Read Inbox", desc: "Teammates poll their inbox before each LLM call. New messages become context." },
-  { title: "Independent Work", desc: "Each teammate runs its own agent loop independently." },
-  { title: "Pass Result", desc: "Results flow through the same mailbox mechanism. All communication is via files." },
-  { title: "Feedback Loop", desc: "The mailbox pattern supports any communication topology: linear, broadcast, round-robin." },
-  { title: "File-Based Coordination", desc: "No shared memory, no locks. All coordination through append-only files. Simple, robust, debuggable." },
+  {
+    title: "The Team",
+    desc: "Teams use a leader-worker pattern. Each teammate has a file-based mailbox inbox.",
+  },
+  {
+    title: "Lead Assigns Work",
+    desc: "Communication is async: write a message to the recipient's .jsonl inbox file.",
+  },
+  {
+    title: "Read Inbox",
+    desc: "Teammates poll their inbox before each LLM call. New messages become context.",
+  },
+  {
+    title: "Independent Work",
+    desc: "Each teammate runs its own agent loop independently.",
+  },
+  {
+    title: "Pass Result",
+    desc: "Results flow through the same mailbox mechanism. All communication is via files.",
+  },
+  {
+    title: "Feedback Loop",
+    desc: "The mailbox pattern supports any communication topology: linear, broadcast, round-robin.",
+  },
+  {
+    title: "File-Based Coordination",
+    desc: "No shared memory, no locks. All coordination through append-only files. Simple, robust, debuggable.",
+  },
 ];
 
 // Helper: determine which agent glows at each step
@@ -85,8 +112,18 @@ function TravelingMessage({
       initial={{ opacity: 0 }}
       animate={{
         opacity: [0, 1, 1, 0.8],
-        x: [fromX - MSG_W / 2, fromX - MSG_W / 2, toX - MSG_W / 2, toX - MSG_W / 2],
-        y: [fromY - MSG_H / 2, fromY - MSG_H / 2, toY - MSG_H / 2, toY - MSG_H / 2],
+        x: [
+          fromX - MSG_W / 2,
+          fromX - MSG_W / 2,
+          toX - MSG_W / 2,
+          toX - MSG_W / 2,
+        ],
+        y: [
+          fromY - MSG_H / 2,
+          fromY - MSG_H / 2,
+          toY - MSG_H / 2,
+          toY - MSG_H / 2,
+        ],
       }}
       transition={{
         duration: 1.4,
@@ -112,7 +149,15 @@ function TravelingMessage({
 }
 
 // Faded trace line between two agents
-function TraceLine({ from, to, strokeColor }: { from: string; to: string; strokeColor: string }) {
+function TraceLine({
+  from,
+  to,
+  strokeColor,
+}: {
+  from: string;
+  to: string;
+  strokeColor: string;
+}) {
   const f = trayCenter(from);
   const t = trayCenter(to);
   return (
@@ -132,7 +177,10 @@ function TraceLine({ from, to, strokeColor }: { from: string; to: string; stroke
 }
 
 export default function AgentTeams({ title }: { title?: string }) {
-  const vis = useSteppedVisualization({ totalSteps: STEPS.length, autoPlayInterval: 2500 });
+  const vis = useSteppedVisualization({
+    totalSteps: STEPS.length,
+    autoPlayInterval: 2500,
+  });
   const step = vis.currentStep;
   const palette = useSvgPalette();
 
@@ -159,9 +207,21 @@ export default function AgentTeams({ title }: { title?: string }) {
               {/* Step 6: trace lines */}
               {step === 6 && (
                 <>
-                  <TraceLine from="lead" to="coder" strokeColor={palette.edgeStroke} />
-                  <TraceLine from="coder" to="reviewer" strokeColor={palette.edgeStroke} />
-                  <TraceLine from="reviewer" to="lead" strokeColor={palette.edgeStroke} />
+                  <TraceLine
+                    from="lead"
+                    to="coder"
+                    strokeColor={palette.edgeStroke}
+                  />
+                  <TraceLine
+                    from="coder"
+                    to="reviewer"
+                    strokeColor={palette.edgeStroke}
+                  />
+                  <TraceLine
+                    from="reviewer"
+                    to="lead"
+                    strokeColor={palette.edgeStroke}
+                  />
                 </>
               )}
 
@@ -186,7 +246,11 @@ export default function AgentTeams({ title }: { title?: string }) {
                       }}
                       transition={
                         pulsing
-                          ? { duration: 0.8, repeat: Infinity, ease: "easeInOut" }
+                          ? {
+                              duration: 0.8,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            }
                           : { duration: 0.4 }
                       }
                       filter={glowing ? "url(#agent-glow)" : undefined}
@@ -211,8 +275,16 @@ export default function AgentTeams({ title }: { title?: string }) {
                       width={TRAY_W}
                       height={TRAY_H}
                       rx={3}
-                      fill={trayHasMessage(agent.id, step) ? "#fef3c7" : palette.nodeFill}
-                      stroke={trayHasMessage(agent.id, step) ? "#f59e0b" : palette.nodeStroke}
+                      fill={
+                        trayHasMessage(agent.id, step)
+                          ? "#fef3c7"
+                          : palette.nodeFill
+                      }
+                      stroke={
+                        trayHasMessage(agent.id, step)
+                          ? "#f59e0b"
+                          : palette.nodeStroke
+                      }
                       strokeWidth={1}
                     />
                     <text
@@ -237,11 +309,33 @@ export default function AgentTeams({ title }: { title?: string }) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <rect x={12} y={12} width={100} height={44} rx={4} fill="#f0f9ff" stroke="#bae6fd" strokeWidth={1} />
-                  <text x={20} y={28} fontSize={7} fontFamily="monospace" fill="#0284c7" fontWeight={600}>
+                  <rect
+                    x={12}
+                    y={12}
+                    width={100}
+                    height={44}
+                    rx={4}
+                    fill="#f0f9ff"
+                    stroke="#bae6fd"
+                    strokeWidth={1}
+                  />
+                  <text
+                    x={20}
+                    y={28}
+                    fontSize={7}
+                    fontFamily="monospace"
+                    fill="#0284c7"
+                    fontWeight={600}
+                  >
                     team.config
                   </text>
-                  <text x={20} y={40} fontSize={6} fontFamily="monospace" fill="#0369a1">
+                  <text
+                    x={20}
+                    y={40}
+                    fontSize={6}
+                    fontFamily="monospace"
+                    fill="#0369a1"
+                  >
                     workers: [coder, reviewer]
                   </text>
                 </motion.g>
@@ -312,7 +406,9 @@ export default function AgentTeams({ title }: { title?: string }) {
                 {step === 4 && (
                   <TravelingMessage
                     key="msg-coder-reviewer"
-                    fromX={agentById("coder").cx + AGENT_R + 8 + (MSG_W + 10) / 2}
+                    fromX={
+                      agentById("coder").cx + AGENT_R + 8 + (MSG_W + 10) / 2
+                    }
                     fromY={agentById("coder").cy}
                     toX={agentById("reviewer").cx}
                     toY={agentById("reviewer").cy + TRAY_OFFSET_Y + TRAY_H / 2}
@@ -328,7 +424,9 @@ export default function AgentTeams({ title }: { title?: string }) {
                     <TravelingMessage
                       key="msg-reviewer-read"
                       fromX={agentById("reviewer").cx}
-                      fromY={agentById("reviewer").cy + TRAY_OFFSET_Y + TRAY_H / 2}
+                      fromY={
+                        agentById("reviewer").cy + TRAY_OFFSET_Y + TRAY_H / 2
+                      }
                       toX={agentById("reviewer").cx}
                       toY={agentById("reviewer").cy}
                       label="result:done"
@@ -354,17 +452,50 @@ export default function AgentTeams({ title }: { title?: string }) {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <rect x={SVG_W / 2 - 110} y={SVG_H - 80} width={220} height={68} rx={6} fill={palette.bgSubtle} stroke={palette.nodeStroke} strokeWidth={1} />
-                  <text x={SVG_W / 2 - 96} y={SVG_H - 60} fontSize={8} fontFamily="monospace" fill={palette.labelFill}>
+                  <rect
+                    x={SVG_W / 2 - 110}
+                    y={SVG_H - 80}
+                    width={220}
+                    height={68}
+                    rx={6}
+                    fill={palette.bgSubtle}
+                    stroke={palette.nodeStroke}
+                    strokeWidth={1}
+                  />
+                  <text
+                    x={SVG_W / 2 - 96}
+                    y={SVG_H - 60}
+                    fontSize={8}
+                    fontFamily="monospace"
+                    fill={palette.labelFill}
+                  >
                     .claude/teams/project/
                   </text>
-                  <text x={SVG_W / 2 - 82} y={SVG_H - 48} fontSize={8} fontFamily="monospace" fill="#60a5fa">
+                  <text
+                    x={SVG_W / 2 - 82}
+                    y={SVG_H - 48}
+                    fontSize={8}
+                    fontFamily="monospace"
+                    fill="#60a5fa"
+                  >
                     lead.jsonl
                   </text>
-                  <text x={SVG_W / 2 - 82} y={SVG_H - 36} fontSize={8} fontFamily="monospace" fill="#60a5fa">
+                  <text
+                    x={SVG_W / 2 - 82}
+                    y={SVG_H - 36}
+                    fontSize={8}
+                    fontFamily="monospace"
+                    fill="#60a5fa"
+                  >
                     coder.jsonl
                   </text>
-                  <text x={SVG_W / 2 - 82} y={SVG_H - 24} fontSize={8} fontFamily="monospace" fill="#60a5fa">
+                  <text
+                    x={SVG_W / 2 - 82}
+                    y={SVG_H - 24}
+                    fontSize={8}
+                    fontFamily="monospace"
+                    fill="#60a5fa"
+                  >
                     reviewer.jsonl
                   </text>
                 </motion.g>

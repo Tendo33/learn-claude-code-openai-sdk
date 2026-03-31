@@ -22,7 +22,9 @@ export async function generateMetadata({
   const messages = metaMessages[locale] || metaMessages.en;
   return {
     title: messages.meta?.title || "Learn Claude Code",
-    description: messages.meta?.description || "Build an AI coding agent from scratch, one concept at a time",
+    description:
+      messages.meta?.description ||
+      "Build an AI coding agent from scratch, one concept at a time",
   };
 }
 
@@ -38,14 +40,18 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: `
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
           (function() {
             var theme = localStorage.getItem('theme');
             if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
               document.documentElement.classList.add('dark');
             }
           })();
-        `}} />
+        `,
+          }}
+        />
       </head>
       <body className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] antialiased">
         <I18nProvider locale={locale}>

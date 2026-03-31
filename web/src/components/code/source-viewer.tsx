@@ -32,10 +32,37 @@ function highlightLine(line: string): React.ReactNode[] {
   }
 
   const keywordSet = new Set([
-    "def", "class", "import", "from", "return", "if", "elif", "else",
-    "while", "for", "in", "not", "and", "or", "is", "None", "True",
-    "False", "try", "except", "raise", "with", "as", "yield", "break",
-    "continue", "pass", "global", "lambda", "async", "await",
+    "def",
+    "class",
+    "import",
+    "from",
+    "return",
+    "if",
+    "elif",
+    "else",
+    "while",
+    "for",
+    "in",
+    "not",
+    "and",
+    "or",
+    "is",
+    "None",
+    "True",
+    "False",
+    "try",
+    "except",
+    "raise",
+    "with",
+    "as",
+    "yield",
+    "break",
+    "continue",
+    "pass",
+    "global",
+    "lambda",
+    "async",
+    "await",
   ]);
 
   const parts = line.split(
@@ -45,13 +72,25 @@ function highlightLine(line: string): React.ReactNode[] {
   return parts.map((part, idx) => {
     if (!part) return null;
     if (keywordSet.has(part)) {
-      return <span key={idx} className="text-blue-400 font-medium">{part}</span>;
+      return (
+        <span key={idx} className="text-blue-400 font-medium">
+          {part}
+        </span>
+      );
     }
     if (part === "self") {
-      return <span key={idx} className="text-purple-400">{part}</span>;
+      return (
+        <span key={idx} className="text-purple-400">
+          {part}
+        </span>
+      );
     }
     if (part.startsWith("#")) {
-      return <span key={idx} className="text-zinc-400 italic">{part}</span>;
+      return (
+        <span key={idx} className="text-zinc-400 italic">
+          {part}
+        </span>
+      );
     }
     if (
       (part.startsWith('"') && part.endsWith('"')) ||
@@ -59,10 +98,18 @@ function highlightLine(line: string): React.ReactNode[] {
       (part.startsWith('f"') && part.endsWith('"')) ||
       (part.startsWith("f'") && part.endsWith("'"))
     ) {
-      return <span key={idx} className="text-emerald-500">{part}</span>;
+      return (
+        <span key={idx} className="text-emerald-500">
+          {part}
+        </span>
+      );
     }
     if (/^\d+(?:\.\d+)?$/.test(part)) {
-      return <span key={idx} className="text-orange-400">{part}</span>;
+      return (
+        <span key={idx} className="text-orange-400">
+          {part}
+        </span>
+      );
     }
     return <span key={idx}>{part}</span>;
   });
@@ -89,9 +136,7 @@ export function SourceViewer({ source, filename }: SourceViewerProps) {
                 <span className="mr-2 inline-block w-6 shrink-0 select-none text-right text-zinc-600 sm:mr-4 sm:w-8">
                   {i + 1}
                 </span>
-                <span className="text-zinc-200">
-                  {highlightLine(line)}
-                </span>
+                <span className="text-zinc-200">{highlightLine(line)}</span>
               </div>
             ))}
           </code>

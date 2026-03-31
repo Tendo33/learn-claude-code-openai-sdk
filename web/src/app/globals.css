@@ -3,11 +3,11 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --color-layer-tools: #3B82F6;
-  --color-layer-planning: #10B981;
-  --color-layer-memory: #8B5CF6;
-  --color-layer-concurrency: #F59E0B;
-  --color-layer-collaboration: #EF4444;
+  --color-layer-tools: #3b82f6;
+  --color-layer-planning: #10b981;
+  --color-layer-memory: #8b5cf6;
+  --color-layer-concurrency: #f59e0b;
+  --color-layer-collaboration: #ef4444;
   --color-bg: #ffffff;
   --color-bg-secondary: #f4f4f5;
   --color-text: #09090b;
@@ -29,7 +29,8 @@ body {
 }
 
 @media (max-width: 640px) {
-  pre, code {
+  pre,
+  code {
     font-size: 11px;
   }
 }
@@ -130,7 +131,7 @@ body {
 }
 
 .prose-custom blockquote.hero-callout::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
@@ -217,7 +218,10 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   border-radius: 0 0 0.375rem 0.375rem;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 .prose-custom pre.code-block[data-language="sh"]::before {

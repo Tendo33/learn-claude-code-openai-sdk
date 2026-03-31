@@ -38,7 +38,9 @@ function getVersionData(id: string) {
 
 const MAX_LOC = Math.max(
   ...versionsData.versions
-    .filter((v) => LEARNING_PATH.includes(v.id as (typeof LEARNING_PATH)[number]))
+    .filter((v) =>
+      LEARNING_PATH.includes(v.id as (typeof LEARNING_PATH)[number])
+    )
     .map((v) => v.loc)
 );
 
@@ -95,7 +97,8 @@ export function Timeline() {
                     className={cn(
                       "w-0.5 flex-1",
                       LAYER_LINE_BG[
-                        VERSION_META[LEARNING_PATH[index + 1]]?.layer || meta.layer
+                        VERSION_META[LEARNING_PATH[index + 1]]?.layer ||
+                          meta.layer
                       ]
                     )}
                   />
@@ -193,7 +196,10 @@ export function Timeline() {
                       initial={{ width: 0 }}
                       whileInView={{ width: `${widthPercent}%` }}
                       viewport={{ once: true }}
-                      transition={{ duration: 0.6, delay: 0.05 * LEARNING_PATH.indexOf(versionId) }}
+                      transition={{
+                        duration: 0.6,
+                        delay: 0.05 * LEARNING_PATH.indexOf(versionId),
+                      }}
                       className={cn(
                         "flex h-full items-center rounded px-2",
                         LAYER_BAR_BG[meta.layer]

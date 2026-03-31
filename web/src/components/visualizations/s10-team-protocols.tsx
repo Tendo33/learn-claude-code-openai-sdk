@@ -24,17 +24,38 @@ const REQUEST_ID = "req_abc";
 
 // -- Shutdown protocol step definitions --
 const SHUTDOWN_STEPS = [
-  { title: "Structured Protocols", desc: "Protocols define structured message exchanges with correlated request IDs." },
-  { title: "Shutdown Request", desc: "The leader initiates shutdown. The request_id links the request to its response." },
-  { title: "Teammate Decides", desc: "The teammate can accept or reject. It's not a forced kill -- it's a polite request." },
-  { title: "Approved", desc: "Same request_id in the response. Teammate exits cleanly." },
+  {
+    title: "Structured Protocols",
+    desc: "Protocols define structured message exchanges with correlated request IDs.",
+  },
+  {
+    title: "Shutdown Request",
+    desc: "The leader initiates shutdown. The request_id links the request to its response.",
+  },
+  {
+    title: "Teammate Decides",
+    desc: "The teammate can accept or reject. It's not a forced kill -- it's a polite request.",
+  },
+  {
+    title: "Approved",
+    desc: "Same request_id in the response. Teammate exits cleanly.",
+  },
 ];
 
 // -- Plan approval protocol step definitions --
 const PLAN_STEPS = [
-  { title: "Plan Approval", desc: "Teammates in plan_mode must get approval before implementing changes." },
-  { title: "Submit Plan", desc: "The teammate designs a plan and sends it to the leader for review." },
-  { title: "Leader Reviews", desc: "Leader reviews and approves or rejects with feedback. Same request-response pattern." },
+  {
+    title: "Plan Approval",
+    desc: "Teammates in plan_mode must get approval before implementing changes.",
+  },
+  {
+    title: "Submit Plan",
+    desc: "The teammate designs a plan and sends it to the leader for review.",
+  },
+  {
+    title: "Leader Reviews",
+    desc: "Leader reviews and approves or rejects with feedback. Same request-response pattern.",
+  },
 ];
 
 // Horizontal arrow between lifelines
@@ -57,8 +78,14 @@ function SequenceArrow({
   tagStroke?: string;
   tagText?: string;
 }) {
-  const fromX = direction === "right" ? LIFELINE_LEFT_X + ACTIVATION_W / 2 : LIFELINE_RIGHT_X - ACTIVATION_W / 2;
-  const toX = direction === "right" ? LIFELINE_RIGHT_X - ACTIVATION_W / 2 : LIFELINE_LEFT_X + ACTIVATION_W / 2;
+  const fromX =
+    direction === "right"
+      ? LIFELINE_LEFT_X + ACTIVATION_W / 2
+      : LIFELINE_RIGHT_X - ACTIVATION_W / 2;
+  const toX =
+    direction === "right"
+      ? LIFELINE_RIGHT_X - ACTIVATION_W / 2
+      : LIFELINE_LEFT_X + ACTIVATION_W / 2;
   const arrowTip = direction === "right" ? toX - 6 : toX + 6;
   const labelX = (fromX + toX) / 2;
 
@@ -69,14 +96,7 @@ function SequenceArrow({
       transition={{ duration: 0.5 }}
     >
       {/* Arrow line */}
-      <line
-        x1={fromX}
-        y1={y}
-        x2={toX}
-        y2={y}
-        stroke={color}
-        strokeWidth={2}
-      />
+      <line x1={fromX} y1={y} x2={toX} y2={y} stroke={color} strokeWidth={2} />
       {/* Arrow head */}
       <polygon
         points={
@@ -142,13 +162,33 @@ function DecisionBox({ x, y }: { x: number; y: number }) {
         stroke="#f59e0b"
         strokeWidth={1}
       />
-      <text x={x} y={y + 1} textAnchor="middle" dominantBaseline="middle" fontSize={7} fontWeight={700} fill="#92400e">
+      <text
+        x={x}
+        y={y + 1}
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fontSize={7}
+        fontWeight={700}
+        fill="#92400e"
+      >
         ?
       </text>
-      <text x={x + size + 6} y={y - 4} fontSize={6} fontFamily="monospace" fill="#10b981">
+      <text
+        x={x + size + 6}
+        y={y - 4}
+        fontSize={6}
+        fontFamily="monospace"
+        fill="#10b981"
+      >
         approve
       </text>
-      <text x={x + size + 6} y={y + 6} fontSize={6} fontFamily="monospace" fill="#ef4444">
+      <text
+        x={x + size + 6}
+        y={y + 6}
+        fontSize={6}
+        fontFamily="monospace"
+        fill="#ef4444"
+      >
         reject
       </text>
     </motion.g>
@@ -185,7 +225,8 @@ function ActivationBar({
 export default function TeamProtocols({ title }: { title?: string }) {
   const [protocol, setProtocol] = useState<Protocol>("shutdown");
 
-  const totalSteps = protocol === "shutdown" ? SHUTDOWN_STEPS.length : PLAN_STEPS.length;
+  const totalSteps =
+    protocol === "shutdown" ? SHUTDOWN_STEPS.length : PLAN_STEPS.length;
   const steps = protocol === "shutdown" ? SHUTDOWN_STEPS : PLAN_STEPS;
 
   const vis = useSteppedVisualization({ totalSteps, autoPlayInterval: 2500 });
@@ -247,13 +288,43 @@ export default function TeamProtocols({ title }: { title?: string }) {
           </defs>
 
           {/* Lifeline headers */}
-          <rect x={LIFELINE_LEFT_X - 40} y={20} width={80} height={28} rx={6} fill="#3b82f6" />
-          <text x={LIFELINE_LEFT_X} y={37} textAnchor="middle" dominantBaseline="middle" fill="white" fontSize={11} fontWeight={700}>
+          <rect
+            x={LIFELINE_LEFT_X - 40}
+            y={20}
+            width={80}
+            height={28}
+            rx={6}
+            fill="#3b82f6"
+          />
+          <text
+            x={LIFELINE_LEFT_X}
+            y={37}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fill="white"
+            fontSize={11}
+            fontWeight={700}
+          >
             {leftLabel}
           </text>
 
-          <rect x={LIFELINE_RIGHT_X - 40} y={20} width={80} height={28} rx={6} fill="#8b5cf6" />
-          <text x={LIFELINE_RIGHT_X} y={37} textAnchor="middle" dominantBaseline="middle" fill="white" fontSize={11} fontWeight={700}>
+          <rect
+            x={LIFELINE_RIGHT_X - 40}
+            y={20}
+            width={80}
+            height={28}
+            rx={6}
+            fill="#8b5cf6"
+          />
+          <text
+            x={LIFELINE_RIGHT_X}
+            y={37}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fill="white"
+            fontSize={11}
+            fontWeight={700}
+          >
             {rightLabel}
           </text>
 
@@ -285,7 +356,11 @@ export default function TeamProtocols({ title }: { title?: string }) {
                   <ActivationBar
                     x={LIFELINE_LEFT_X}
                     yStart={ARROW_Y_START - 10}
-                    yEnd={step >= 3 ? ARROW_Y_START + ARROW_Y_GAP * 2 + 20 : ARROW_Y_START + 30}
+                    yEnd={
+                      step >= 3
+                        ? ARROW_Y_START + ARROW_Y_GAP * 2 + 20
+                        : ARROW_Y_START + 30
+                    }
                     color="#3b82f6"
                   />
                 )}
@@ -293,7 +368,11 @@ export default function TeamProtocols({ title }: { title?: string }) {
                   <ActivationBar
                     x={LIFELINE_RIGHT_X}
                     yStart={ARROW_Y_START - 5}
-                    yEnd={step >= 3 ? ARROW_Y_START + ARROW_Y_GAP * 2 + 15 : ARROW_Y_START + ARROW_Y_GAP + 20}
+                    yEnd={
+                      step >= 3
+                        ? ARROW_Y_START + ARROW_Y_GAP * 2 + 15
+                        : ARROW_Y_START + ARROW_Y_GAP + 20
+                    }
                     color="#8b5cf6"
                   />
                 )}
@@ -378,7 +457,11 @@ export default function TeamProtocols({ title }: { title?: string }) {
                   <ActivationBar
                     x={LIFELINE_RIGHT_X}
                     yStart={ARROW_Y_START - 10}
-                    yEnd={step >= 2 ? ARROW_Y_START + ARROW_Y_GAP * 2 + 15 : ARROW_Y_START + 30}
+                    yEnd={
+                      step >= 2
+                        ? ARROW_Y_START + ARROW_Y_GAP * 2 + 15
+                        : ARROW_Y_START + 30
+                    }
                     color="#8b5cf6"
                   />
                 )}
@@ -386,7 +469,11 @@ export default function TeamProtocols({ title }: { title?: string }) {
                   <ActivationBar
                     x={LIFELINE_LEFT_X}
                     yStart={ARROW_Y_START - 5}
-                    yEnd={step >= 2 ? ARROW_Y_START + ARROW_Y_GAP * 2 + 15 : ARROW_Y_START + ARROW_Y_GAP + 10}
+                    yEnd={
+                      step >= 2
+                        ? ARROW_Y_START + ARROW_Y_GAP * 2 + 15
+                        : ARROW_Y_START + ARROW_Y_GAP + 10
+                    }
                     color="#3b82f6"
                   />
                 )}
@@ -422,16 +509,41 @@ export default function TeamProtocols({ title }: { title?: string }) {
                       stroke={palette.nodeStroke}
                       strokeWidth={0.5}
                     />
-                    <text x={28} y={ARROW_Y_START + 34} fontSize={6} fontFamily="monospace" fill={palette.nodeText} fontWeight={600}>
+                    <text
+                      x={28}
+                      y={ARROW_Y_START + 34}
+                      fontSize={6}
+                      fontFamily="monospace"
+                      fill={palette.nodeText}
+                      fontWeight={600}
+                    >
                       Plan:
                     </text>
-                    <text x={28} y={ARROW_Y_START + 44} fontSize={5.5} fontFamily="monospace" fill={palette.labelFill}>
+                    <text
+                      x={28}
+                      y={ARROW_Y_START + 44}
+                      fontSize={5.5}
+                      fontFamily="monospace"
+                      fill={palette.labelFill}
+                    >
                       1. Add error handler
                     </text>
-                    <text x={28} y={ARROW_Y_START + 54} fontSize={5.5} fontFamily="monospace" fill={palette.labelFill}>
+                    <text
+                      x={28}
+                      y={ARROW_Y_START + 54}
+                      fontSize={5.5}
+                      fontFamily="monospace"
+                      fill={palette.labelFill}
+                    >
                       2. Update tests
                     </text>
-                    <text x={28} y={ARROW_Y_START + 64} fontSize={5.5} fontFamily="monospace" fill={palette.labelFill}>
+                    <text
+                      x={28}
+                      y={ARROW_Y_START + 64}
+                      fontSize={5.5}
+                      fontFamily="monospace"
+                      fill={palette.labelFill}
+                    >
                       3. Refactor module
                     </text>
                   </motion.g>
@@ -458,7 +570,12 @@ export default function TeamProtocols({ title }: { title?: string }) {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.3 }}
                   >
-                    <circle cx={LIFELINE_RIGHT_X + 40} cy={ARROW_Y_START + ARROW_Y_GAP * 2} r={10} fill="#10b981" />
+                    <circle
+                      cx={LIFELINE_RIGHT_X + 40}
+                      cy={ARROW_Y_START + ARROW_Y_GAP * 2}
+                      r={10}
+                      fill="#10b981"
+                    />
                     <text
                       x={LIFELINE_RIGHT_X + 40}
                       y={ARROW_Y_START + ARROW_Y_GAP * 2 + 1}

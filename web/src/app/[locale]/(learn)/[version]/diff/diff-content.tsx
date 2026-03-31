@@ -7,8 +7,20 @@ import { VERSION_META } from "@/lib/constants";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { LayerBadge } from "@/components/ui/badge";
 import { CodeDiff } from "@/components/diff/code-diff";
-import { ArrowLeft, Plus, Minus, FileCode, Wrench, Box, FunctionSquare } from "lucide-react";
-import type { AgentVersion, VersionDiff, VersionIndex } from "@/types/agent-data";
+import {
+  ArrowLeft,
+  Plus,
+  Minus,
+  FileCode,
+  Wrench,
+  Box,
+  FunctionSquare,
+} from "lucide-react";
+import type {
+  AgentVersion,
+  VersionDiff,
+  VersionIndex,
+} from "@/types/agent-data";
 import versionData from "@/data/generated/versions.json";
 
 const data = versionData as VersionIndex;
@@ -33,7 +45,10 @@ export function DiffPageContent({ version }: DiffPageContentProps) {
     return (
       <div className="py-12 text-center">
         <p className="text-zinc-500">Version not found.</p>
-        <Link href={`/${locale}/timeline`} className="mt-4 inline-block text-sm text-blue-600 hover:underline">
+        <Link
+          href={`/${locale}/timeline`}
+          className="mt-4 inline-block text-sm text-blue-600 hover:underline"
+        >
           Back to timeline
         </Link>
       </div>
@@ -52,7 +67,8 @@ export function DiffPageContent({ version }: DiffPageContentProps) {
         </Link>
         <h1 className="text-3xl font-bold">{meta.title}</h1>
         <p className="mt-4 text-zinc-500">
-          This is the first version -- there is no previous version to compare against.
+          This is the first version -- there is no previous version to compare
+          against.
         </p>
       </div>
     );
@@ -76,7 +92,8 @@ export function DiffPageContent({ version }: DiffPageContentProps) {
           {prevMeta?.title || prevVersion.id} → {meta.title}
         </h1>
         <p className="mt-2 text-zinc-500 dark:text-zinc-400">
-          {prevVersion.id} ({prevVersion.loc} LOC) → {version} ({currentVersion.loc} LOC)
+          {prevVersion.id} ({prevVersion.loc} LOC) → {version} (
+          {currentVersion.loc} LOC)
         </p>
       </div>
 
@@ -90,10 +107,19 @@ export function DiffPageContent({ version }: DiffPageContentProps) {
             </div>
           </CardHeader>
           <CardTitle>
-            <span className={diff.locDelta >= 0 ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}>
-              {diff.locDelta >= 0 ? "+" : ""}{diff.locDelta}
+            <span
+              className={
+                diff.locDelta >= 0
+                  ? "text-green-600 dark:text-green-400"
+                  : "text-red-600 dark:text-red-400"
+              }
+            >
+              {diff.locDelta >= 0 ? "+" : ""}
+              {diff.locDelta}
             </span>
-            <span className="ml-2 text-sm font-normal text-zinc-500">lines</span>
+            <span className="ml-2 text-sm font-normal text-zinc-500">
+              lines
+            </span>
           </CardTitle>
         </Card>
 
@@ -105,12 +131,17 @@ export function DiffPageContent({ version }: DiffPageContentProps) {
             </div>
           </CardHeader>
           <CardTitle>
-            <span className="text-blue-600 dark:text-blue-400">{diff.newTools.length}</span>
+            <span className="text-blue-600 dark:text-blue-400">
+              {diff.newTools.length}
+            </span>
           </CardTitle>
           {diff.newTools.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1">
               {diff.newTools.map((tool) => (
-                <span key={tool} className="rounded bg-blue-100 px-1.5 py-0.5 text-xs text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+                <span
+                  key={tool}
+                  className="rounded bg-blue-100 px-1.5 py-0.5 text-xs text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"
+                >
                   {tool}
                 </span>
               ))}
@@ -126,12 +157,17 @@ export function DiffPageContent({ version }: DiffPageContentProps) {
             </div>
           </CardHeader>
           <CardTitle>
-            <span className="text-purple-600 dark:text-purple-400">{diff.newClasses.length}</span>
+            <span className="text-purple-600 dark:text-purple-400">
+              {diff.newClasses.length}
+            </span>
           </CardTitle>
           {diff.newClasses.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1">
               {diff.newClasses.map((cls) => (
-                <span key={cls} className="rounded bg-purple-100 px-1.5 py-0.5 text-xs text-purple-700 dark:bg-purple-900/30 dark:text-purple-300">
+                <span
+                  key={cls}
+                  className="rounded bg-purple-100 px-1.5 py-0.5 text-xs text-purple-700 dark:bg-purple-900/30 dark:text-purple-300"
+                >
                   {cls}
                 </span>
               ))}
@@ -147,12 +183,17 @@ export function DiffPageContent({ version }: DiffPageContentProps) {
             </div>
           </CardHeader>
           <CardTitle>
-            <span className="text-amber-600 dark:text-amber-400">{diff.newFunctions.length}</span>
+            <span className="text-amber-600 dark:text-amber-400">
+              {diff.newFunctions.length}
+            </span>
           </CardTitle>
           {diff.newFunctions.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1">
               {diff.newFunctions.map((fn) => (
-                <span key={fn} className="rounded bg-amber-100 px-1.5 py-0.5 text-xs text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">
+                <span
+                  key={fn}
+                  className="rounded bg-amber-100 px-1.5 py-0.5 text-xs text-amber-700 dark:bg-amber-900/30 dark:text-amber-300"
+                >
                   {fn}
                 </span>
               ))}
@@ -170,8 +211,12 @@ export function DiffPageContent({ version }: DiffPageContentProps) {
           </CardHeader>
           <div className="space-y-1 text-sm text-zinc-600 dark:text-zinc-400">
             <p>{prevVersion.loc} LOC</p>
-            <p>{prevVersion.tools.length} tools: {prevVersion.tools.join(", ")}</p>
-            <LayerBadge layer={prevVersion.layer}>{prevVersion.layer}</LayerBadge>
+            <p>
+              {prevVersion.tools.length} tools: {prevVersion.tools.join(", ")}
+            </p>
+            <LayerBadge layer={prevVersion.layer}>
+              {prevVersion.layer}
+            </LayerBadge>
           </div>
         </Card>
         <Card className="border-l-4 border-l-green-300 dark:border-l-green-700">
@@ -181,8 +226,13 @@ export function DiffPageContent({ version }: DiffPageContentProps) {
           </CardHeader>
           <div className="space-y-1 text-sm text-zinc-600 dark:text-zinc-400">
             <p>{currentVersion.loc} LOC</p>
-            <p>{currentVersion.tools.length} tools: {currentVersion.tools.join(", ")}</p>
-            <LayerBadge layer={currentVersion.layer}>{currentVersion.layer}</LayerBadge>
+            <p>
+              {currentVersion.tools.length} tools:{" "}
+              {currentVersion.tools.join(", ")}
+            </p>
+            <LayerBadge layer={currentVersion.layer}>
+              {currentVersion.layer}
+            </LayerBadge>
           </div>
         </Card>
       </div>

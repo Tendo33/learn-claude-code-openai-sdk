@@ -136,19 +136,25 @@ class TodoManager:
             content = str(item.get("content", "")).strip()
             status = str(item.get("status", "pending")).lower()
             af = str(item.get("activeForm", "")).strip()
-            if not content: raise ValueError(f"Item {i}: content required")
+            if not content:
+                raise ValueError(f"Item {i}: content required")
             if status not in ("pending", "in_progress", "completed"):
                 raise ValueError(f"Item {i}: invalid status '{status}'")
-            if not af: raise ValueError(f"Item {i}: activeForm required")
-            if status == "in_progress": ip += 1
+            if not af:
+                raise ValueError(f"Item {i}: activeForm required")
+            if status == "in_progress":
+                ip += 1
             validated.append({"content": content, "status": status, "activeForm": af})
-        if len(validated) > 20: raise ValueError("Max 20 todos")
-        if ip > 1: raise ValueError("Only one in_progress allowed")
+        if len(validated) > 20:
+            raise ValueError("Max 20 todos")
+        if ip > 1:
+            raise ValueError("Only one in_progress allowed")
         self.items = validated
         return self.render()
 
     def render(self) -> str:
-        if not self.items: return "No todos."
+        if not self.items:
+            return "No todos."
         lines = []
         for item in self.items:
             m = {"completed": "[x]", "in_progress": "[>]", "pending": "[ ]"}.get(item["status"], "[?]")
@@ -240,12 +246,14 @@ class SkillLoader:
                 self.skills[name] = {"meta": meta, "body": body}
 
     def descriptions(self) -> str:
-        if not self.skills: return "(no skills)"
+        if not self.skills:
+            return "(no skills)"
         return "\n".join(f"  - {n}: {s['meta'].get('description', '-')}" for n, s in self.skills.items())
 
     def load(self, name: str) -> str:
         s = self.skills.get(name)
-        if not s: return f"Error: Unknown skill '{name}'. Available: {', '.join(self.skills.keys())}"
+        if not s:
+            return f"Error: Unknown skill '{name}'. Available: {', '.join(self.skills.keys())}"
         return f"<skill name=\"{name}\">\n{s['body']}\n</skill>"
 
 
@@ -293,7 +301,8 @@ class TaskManager:
 
     def _load(self, tid: int) -> dict:
         p = TASKS_DIR / f"task_{tid}.json"
-        if not p.exists(): raise ValueError(f"Task {tid} not found")
+        if not p.exists():
+            raise ValueError(f"Task {tid} not found")
         return json.loads(p.read_text())
 
     def _save(self, task: dict):
@@ -331,7 +340,8 @@ class TaskManager:
 
     def list_all(self) -> str:
         tasks = [json.loads(f.read_text()) for f in sorted(TASKS_DIR.glob("task_*.json"))]
-        if not tasks: return "No tasks."
+        if not tasks:
+            return "No tasks."
         lines = []
         for t in tasks:
             m = {"pending": "[ ]", "in_progress": "[>]", "completed": "[x]"}.get(t["status"], "[?]")
@@ -393,15 +403,17 @@ class MessageBus:
              msg_type: str = "message", extra: dict = None) -> str:
         msg = {"type": msg_type, "from": sender, "content": content,
                "timestamp": time.time()}
-        if extra: msg.update(extra)
+        if extra:
+            msg.update(extra)
         with open(INBOX_DIR / f"{to}.jsonl", "a") as f:
             f.write(json.dumps(msg) + "\n")
         return f"Sent {msg_type} to {to}"
 
     def read_inbox(self, name: str) -> list:
         path = INBOX_DIR / f"{name}.jsonl"
-        if not path.exists(): return []
-        msgs = [json.loads(l) for l in path.read_text().strip().splitlines() if l]
+        if not path.exists():
+            return []
+        msgs = [json.loads(line) for line in path.read_text().strip().splitlines() if line]
         path.write_text("")
         return msgs
 
@@ -439,7 +451,8 @@ class TeammateManager:
 
     def _find(self, name: str) -> dict:
         for m in self.config["members"]:
-            if m["name"] == name: return m
+            if m["name"] == name:
+                return m
         return None
 
     def spawn(self, name: str, role: str, prompt: str) -> str:
@@ -579,7 +592,8 @@ class TeammateManager:
             self._set_status(name, "working")
 
     def list_all(self) -> str:
-        if not self.config["members"]: return "No teammates."
+        if not self.config["members"]:
+            return "No teammates."
         lines = [f"Team: {self.config['team_name']}"]
         for m in self.config["members"]:
             lines.append(f"  {m['name']} ({m['role']}): {m['status']}")
@@ -614,7 +628,8 @@ def handle_shutdown_request(teammate: str) -> str:
 # === SECTION: plan_approval (s10) ===
 def handle_plan_review(request_id: str, approve: bool, feedback: str = "") -> str:
     req = plan_requests.get(request_id)
-    if not req: return f"Error: Unknown plan request_id '{request_id}'"
+    if not req:
+        return f"Error: Unknown plan request_id '{request_id}'"
     req["status"] = "approved" if approve else "rejected"
     BUS.send("lead", req["from"], feedback, "plan_approval_response",
              {"request_id": request_id, "approve": approve, "feedback": feedback})
@@ -790,7 +805,7 @@ def agent_loop(messages: list):
 # === SECTION: repl ===
 if __name__ == "__main__":
     history = []
-    print(f"s_full - Full Agent Cockpit (OpenAI SDK)")
+    print("s_full - Full Agent Cockpit (OpenAI SDK)")
     print("Type 'exit' or 'q' to quit.")
     print("Commands: /compact, /tasks, /team, /inbox\n")
     while True:

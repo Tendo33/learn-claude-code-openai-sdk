@@ -506,7 +506,7 @@ def agent_loop(messages: list):
 
 if __name__ == "__main__":
     history = []
-    print(f"s10 - Team Protocols (OpenAI SDK)")
+    print("s10 - Team Protocols (OpenAI SDK)")
     print("Type 'exit' or 'q' to quit.")
     print("Commands: /team to list members, /inbox to read your messages.\n")
     while True:

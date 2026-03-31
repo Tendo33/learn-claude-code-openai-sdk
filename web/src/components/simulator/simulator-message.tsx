@@ -62,7 +62,10 @@ export function SimulatorMessage({ step, index }: SimulatorMessageProps) {
       )}
     >
       <div className="mb-1.5 flex items-center gap-2">
-        <Icon size={14} className="shrink-0 text-[var(--color-text-secondary)]" />
+        <Icon
+          size={14}
+          className="shrink-0 text-[var(--color-text-secondary)]"
+        />
         <span className="text-xs font-medium text-[var(--color-text-secondary)]">
           {config.label}
           {step.toolName && (

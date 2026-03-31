@@ -58,11 +58,17 @@ export default function LayersPage() {
             >
               {/* Layer header */}
               <div className="flex items-center gap-3 px-6 py-4">
-                <div className={cn("h-3 w-3 rounded-full", LAYER_HEADER_BG[layer.id])} />
+                <div
+                  className={cn(
+                    "h-3 w-3 rounded-full",
+                    LAYER_HEADER_BG[layer.id]
+                  )}
+                />
                 <div>
                   <h2 className="text-xl font-bold">
-                    <span className="text-zinc-400 dark:text-zinc-600">L{index + 1}</span>
-                    {" "}
+                    <span className="text-zinc-400 dark:text-zinc-600">
+                      L{index + 1}
+                    </span>{" "}
                     {layer.label}
                   </h2>
                   <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
@@ -75,17 +81,17 @@ export default function LayersPage() {
               <div className="border-t border-zinc-200 bg-zinc-50/50 px-6 py-4 dark:border-zinc-800 dark:bg-zinc-900/50">
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   {versionInfos.map(({ id, info, meta }) => (
-                    <Link
-                      key={id}
-                      href={`/${locale}/${id}`}
-                      className="group"
-                    >
+                    <Link key={id} href={`/${locale}/${id}`} className="group">
                       <Card className="transition-shadow hover:shadow-md">
                         <div className="flex items-start justify-between">
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center gap-2">
-                              <span className="text-xs font-mono text-zinc-400">{id}</span>
-                              <LayerBadge layer={layer.id}>{layer.id}</LayerBadge>
+                              <span className="text-xs font-mono text-zinc-400">
+                                {id}
+                              </span>
+                              <LayerBadge layer={layer.id}>
+                                {layer.id}
+                              </LayerBadge>
                             </div>
                             <h3 className="mt-1 font-semibold text-zinc-900 dark:text-zinc-100">
                               {meta?.title || id}
@@ -119,8 +125,20 @@ export default function LayersPage() {
               {/* Composition indicator */}
               {index < LAYERS.length - 1 && (
                 <div className="flex items-center justify-center py-1 text-zinc-300 dark:text-zinc-700">
-                  <svg width="20" height="12" viewBox="0 0 20 12" fill="none" className="text-current">
-                    <path d="M10 0 L10 12 M5 7 L10 12 L15 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <svg
+                    width="20"
+                    height="12"
+                    viewBox="0 0 20 12"
+                    fill="none"
+                    className="text-current"
+                  >
+                    <path
+                      d="M10 0 L10 12 M5 7 L10 12 L15 7"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                 </div>
               )}

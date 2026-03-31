@@ -34,12 +34,12 @@ export default async function VersionPage({
   const tLayer = getTranslations(locale, "layer_labels");
   const layer = LAYERS.find((l) => l.id === meta.layer);
 
-  const pathIndex = LEARNING_PATH.indexOf(version as typeof LEARNING_PATH[number]);
+  const pathIndex = LEARNING_PATH.indexOf(
+    version as (typeof LEARNING_PATH)[number]
+  );
   const prevVersion = pathIndex > 0 ? LEARNING_PATH[pathIndex - 1] : null;
   const nextVersion =
-    pathIndex < LEARNING_PATH.length - 1
-      ? LEARNING_PATH[pathIndex + 1]
-      : null;
+    pathIndex < LEARNING_PATH.length - 1 ? LEARNING_PATH[pathIndex + 1] : null;
 
   return (
     <div className="mx-auto max-w-3xl space-y-10 py-4">
@@ -49,7 +49,9 @@ export default async function VersionPage({
           <span className="rounded-lg bg-zinc-100 px-3 py-1 font-mono text-lg font-bold dark:bg-zinc-800">
             {version}
           </span>
-          <h1 className="text-2xl font-bold sm:text-3xl">{tSession(version) || meta.title}</h1>
+          <h1 className="text-2xl font-bold sm:text-3xl">
+            {tSession(version) || meta.title}
+          </h1>
           {layer && (
             <LayerBadge layer={meta.layer}>{tLayer(layer.id)}</LayerBadge>
           )}
@@ -59,7 +61,9 @@ export default async function VersionPage({
         </p>
         <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-500 dark:text-zinc-400">
           <span className="font-mono">{versionData.loc} LOC</span>
-          <span>{versionData.tools.length} {t("tools")}</span>
+          <span>
+            {versionData.tools.length} {t("tools")}
+          </span>
           {meta.coreAddition && (
             <span className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs dark:bg-zinc-800">
               {meta.coreAddition}
@@ -94,7 +98,8 @@ export default async function VersionPage({
             <div>
               <div className="text-xs text-zinc-400">{t("prev")}</div>
               <div className="font-medium">
-                {prevVersion} - {tSession(prevVersion) || VERSION_META[prevVersion]?.title}
+                {prevVersion} -{" "}
+                {tSession(prevVersion) || VERSION_META[prevVersion]?.title}
               </div>
             </div>
           </Link>
@@ -109,7 +114,8 @@ export default async function VersionPage({
             <div>
               <div className="text-xs text-zinc-400">{t("next")}</div>
               <div className="font-medium">
-                {tSession(nextVersion) || VERSION_META[nextVersion]?.title} - {nextVersion}
+                {tSession(nextVersion) || VERSION_META[nextVersion]?.title} -{" "}
+                {nextVersion}
               </div>
             </div>
             <span className="transition-transform group-hover:translate-x-1">

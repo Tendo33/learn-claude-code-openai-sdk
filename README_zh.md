@@ -1,53 +1,41 @@
 # 用 OpenAI SDK 学习 Claude Code
 
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-
 [English](./README.md) | [中文](./README_zh.md)
 
-本仓库是在 `shareAI-lab/learn-claude-code` 基础上，补充 OpenAI SDK 版本实现。
+本仓库是 [shareAI-lab/learn-claude-code](https://github.com/shareAI-lab/learn-claude-code) 项目的 **OpenAI SDK 移植版**。它提供了使用 OpenAI 的 Chat Completions 和 Tool-call API 实现的 12 阶段 Agent 治理机制演进过程。
 
-## 本仓库新增内容
+## 项目结构
 
-- 对应教程各阶段的 OpenAI SDK 脚本：
-  - `openai_v0_bash_agent.py`
-  - `openai_v1_basic_agent.py`
-  - `openai_v2_todo_agent.py`
-  - `openai_v3_subagent.py`
-  - `openai_v4_skills_agent.py`
-- 面向 OpenAI 兼容接口的环境变量配置（`OPENAI_API_KEY`、`OPENAI_BASE_URL`、`MODEL_ID`）。
-- 可选 Logfire 集成（通过 `.[logfire]` 扩展依赖），提供清晰的每次与模型的交互记录。
-- 适配本仓库实现的测试脚本与 CI 工作流。
+- **`agents/`**: 包含从 `s01` 到 `s12` 的 12 个演进阶段。
+- **`agents/s_full.py`**: 完整的集成参考实现。
+- **`web/`**: 用于可视化 Agent 演进的 Next.js 学习门户。
+- **`docs/`**: 各阶段的多语言文档。
 
 ## 快速开始
 
-```bash
-cp .env.example .env
-pip install -e ".[logfire]"
-# 不使用 logfire:
-# pip install -e .
-```
+1. **环境配置**:
+   ```bash
+   cp .env.example .env
+   # 填入 OPENAI_API_KEY 和 OPENAI_BASE_URL
+   ```
 
-运行示例：
+2. **安装依赖**:
+   ```bash
+   pip install -e .
+   ```
 
-```bash
-python openai_v0_bash_agent.py
-python openai_v1_basic_agent.py
-python openai_v2_todo_agent.py
-python openai_v3_subagent.py
-python openai_v4_skills_agent.py
-```
+3. **运行 Agent**:
+   ```bash
+   python agents/s_full.py
+   ```
 
-## 测试
+## 已移植的核心机制
 
-```bash
-python tests/test_unit.py
-```
-
-集成测试：
-
-```bash
-TEST_API_KEY=your_key TEST_BASE_URL=https://api.openai.com/v1 TEST_MODEL=gpt-4o python tests/test_agent.py
-```
+- **s01-s05**: 核心循环、工具调用、规划、子代理、技能加载。
+- **s06**: 上下文三层压缩机制。
+- **s07-s08**: 持久化任务看板与后台线程执行。
+- **s09-s11**: 代理团队协作、握手协议、自主认领任务。
+- **s12**: 工作树（Worktree）级别的任务隔离。
 
 ## 许可证
 

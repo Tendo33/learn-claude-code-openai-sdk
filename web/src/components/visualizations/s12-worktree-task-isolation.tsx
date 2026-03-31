@@ -42,11 +42,20 @@ const STEPS: StepState[] = [
     op: "task_create x2",
     tasks: [
       { id: 1, subject: "Auth refactor", status: "in_progress", worktree: "" },
-      { id: 2, subject: "UI login polish", status: "in_progress", worktree: "" },
+      {
+        id: 2,
+        subject: "UI login polish",
+        status: "in_progress",
+        worktree: "",
+      },
     ],
     worktrees: [],
     lanes: [
-      { name: "main", files: ["auth/service.py", "ui/Login.tsx"], highlight: true },
+      {
+        name: "main",
+        files: ["auth/service.py", "ui/Login.tsx"],
+        highlight: true,
+      },
       { name: "wt/auth-refactor", files: [] },
       { name: "wt/ui-login", files: [] },
     ],
@@ -56,11 +65,26 @@ const STEPS: StepState[] = [
     desc: "Create a worktree lane and associate it with task 1 for clear ownership.",
     op: "worktree_create(name='auth-refactor', task_id=1)",
     tasks: [
-      { id: 1, subject: "Auth refactor", status: "in_progress", worktree: "auth-refactor" },
-      { id: 2, subject: "UI login polish", status: "in_progress", worktree: "" },
+      {
+        id: 1,
+        subject: "Auth refactor",
+        status: "in_progress",
+        worktree: "auth-refactor",
+      },
+      {
+        id: 2,
+        subject: "UI login polish",
+        status: "in_progress",
+        worktree: "",
+      },
     ],
     worktrees: [
-      { name: "auth-refactor", branch: "wt/auth-refactor", task: "#1", state: "active" },
+      {
+        name: "auth-refactor",
+        branch: "wt/auth-refactor",
+        task: "#1",
+        state: "active",
+      },
     ],
     lanes: [
       { name: "main", files: ["ui/Login.tsx"] },
@@ -73,11 +97,26 @@ const STEPS: StepState[] = [
     desc: "Lane creation and task association can be separate. Here task 2 binds after lane creation.",
     op: "worktree_create(name='ui-login')\ntask_bind_worktree(task_id=2, worktree='ui-login')",
     tasks: [
-      { id: 1, subject: "Auth refactor", status: "in_progress", worktree: "auth-refactor" },
-      { id: 2, subject: "UI login polish", status: "in_progress", worktree: "ui-login" },
+      {
+        id: 1,
+        subject: "Auth refactor",
+        status: "in_progress",
+        worktree: "auth-refactor",
+      },
+      {
+        id: 2,
+        subject: "UI login polish",
+        status: "in_progress",
+        worktree: "ui-login",
+      },
     ],
     worktrees: [
-      { name: "auth-refactor", branch: "wt/auth-refactor", task: "#1", state: "active" },
+      {
+        name: "auth-refactor",
+        branch: "wt/auth-refactor",
+        task: "#1",
+        state: "active",
+      },
       { name: "ui-login", branch: "wt/ui-login", task: "#2", state: "active" },
     ],
     lanes: [
@@ -91,16 +130,35 @@ const STEPS: StepState[] = [
     desc: "Each command routes by selected lane directory, not by the shared root.",
     op: "worktree_run('auth-refactor', 'pytest tests/auth -q')",
     tasks: [
-      { id: 1, subject: "Auth refactor", status: "in_progress", worktree: "auth-refactor" },
-      { id: 2, subject: "UI login polish", status: "in_progress", worktree: "ui-login" },
+      {
+        id: 1,
+        subject: "Auth refactor",
+        status: "in_progress",
+        worktree: "auth-refactor",
+      },
+      {
+        id: 2,
+        subject: "UI login polish",
+        status: "in_progress",
+        worktree: "ui-login",
+      },
     ],
     worktrees: [
-      { name: "auth-refactor", branch: "wt/auth-refactor", task: "#1", state: "active" },
+      {
+        name: "auth-refactor",
+        branch: "wt/auth-refactor",
+        task: "#1",
+        state: "active",
+      },
       { name: "ui-login", branch: "wt/ui-login", task: "#2", state: "active" },
     ],
     lanes: [
       { name: "main", files: [] },
-      { name: "wt/auth-refactor", files: ["auth/service.py", "tests/auth/test_login.py"], highlight: true },
+      {
+        name: "wt/auth-refactor",
+        files: ["auth/service.py", "tests/auth/test_login.py"],
+        highlight: true,
+      },
       { name: "wt/ui-login", files: ["ui/Login.tsx", "ui/Login.css"] },
     ],
   },
@@ -110,10 +168,20 @@ const STEPS: StepState[] = [
     op: "worktree_keep('ui-login')\nworktree_remove('auth-refactor', complete_task=true)\nworktree_events(limit=10)",
     tasks: [
       { id: 1, subject: "Auth refactor", status: "completed", worktree: "" },
-      { id: 2, subject: "UI login polish", status: "in_progress", worktree: "ui-login" },
+      {
+        id: 2,
+        subject: "UI login polish",
+        status: "in_progress",
+        worktree: "ui-login",
+      },
     ],
     worktrees: [
-      { name: "auth-refactor", branch: "wt/auth-refactor", task: "#1", state: "removed" },
+      {
+        name: "auth-refactor",
+        branch: "wt/auth-refactor",
+        task: "#1",
+        state: "removed",
+      },
       { name: "ui-login", branch: "wt/ui-login", task: "#2", state: "kept" },
     ],
     lanes: [
@@ -128,10 +196,20 @@ const STEPS: StepState[] = [
     op: "task_list + worktree_list + worktree_events",
     tasks: [
       { id: 1, subject: "Auth refactor", status: "completed", worktree: "" },
-      { id: 2, subject: "UI login polish", status: "in_progress", worktree: "ui-login" },
+      {
+        id: 2,
+        subject: "UI login polish",
+        status: "in_progress",
+        worktree: "ui-login",
+      },
     ],
     worktrees: [
-      { name: "auth-refactor", branch: "wt/auth-refactor", task: "#1", state: "removed" },
+      {
+        name: "auth-refactor",
+        branch: "wt/auth-refactor",
+        task: "#1",
+        state: "removed",
+      },
       { name: "ui-login", branch: "wt/ui-login", task: "#2", state: "kept" },
     ],
     lanes: [
@@ -143,20 +221,28 @@ const STEPS: StepState[] = [
 ];
 
 function statusClass(status: TaskStatus): string {
-  if (status === "completed") return "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300";
-  if (status === "in_progress") return "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300";
+  if (status === "completed")
+    return "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300";
+  if (status === "in_progress")
+    return "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300";
   return "bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300";
 }
 
 function worktreeClass(state: WorktreeRow["state"]): string {
-  if (state === "active") return "border-emerald-300 bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-900/20";
-  if (state === "kept") return "border-sky-300 bg-sky-50 dark:border-sky-800 dark:bg-sky-900/20";
-  if (state === "removed") return "border-zinc-200 bg-zinc-100 opacity-70 dark:border-zinc-700 dark:bg-zinc-800";
+  if (state === "active")
+    return "border-emerald-300 bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-900/20";
+  if (state === "kept")
+    return "border-sky-300 bg-sky-50 dark:border-sky-800 dark:bg-sky-900/20";
+  if (state === "removed")
+    return "border-zinc-200 bg-zinc-100 opacity-70 dark:border-zinc-700 dark:bg-zinc-800";
   return "border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900";
 }
 
 export default function WorktreeTaskIsolation({ title }: { title?: string }) {
-  const vis = useSteppedVisualization({ totalSteps: STEPS.length, autoPlayInterval: 2600 });
+  const vis = useSteppedVisualization({
+    totalSteps: STEPS.length,
+    autoPlayInterval: 2600,
+  });
   const step = STEPS[vis.currentStep];
 
   return (
@@ -185,12 +271,18 @@ export default function WorktreeTaskIsolation({ title }: { title?: string }) {
                   className="rounded border border-zinc-200 p-2 text-xs dark:border-zinc-700"
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-mono text-zinc-500 dark:text-zinc-400">#{task.id}</span>
-                    <span className={`rounded px-1.5 py-0.5 text-[10px] font-semibold ${statusClass(task.status)}`}>
+                    <span className="font-mono text-zinc-500 dark:text-zinc-400">
+                      #{task.id}
+                    </span>
+                    <span
+                      className={`rounded px-1.5 py-0.5 text-[10px] font-semibold ${statusClass(task.status)}`}
+                    >
                       {task.status}
                     </span>
                   </div>
-                  <div className="mt-1 font-medium text-zinc-800 dark:text-zinc-100">{task.subject}</div>
+                  <div className="mt-1 font-medium text-zinc-800 dark:text-zinc-100">
+                    {task.subject}
+                  </div>
                   <div className="mt-1 font-mono text-[10px] text-zinc-500 dark:text-zinc-400">
                     worktree: {task.worktree || "-"}
                   </div>
@@ -217,9 +309,15 @@ export default function WorktreeTaskIsolation({ title }: { title?: string }) {
                   transition={{ duration: 0.25 }}
                   className={`rounded border p-2 text-xs ${worktreeClass(wt.state)}`}
                 >
-                  <div className="font-mono text-[11px] font-semibold text-zinc-800 dark:text-zinc-100">{wt.name}</div>
-                  <div className="font-mono text-[10px] text-zinc-500 dark:text-zinc-400">{wt.branch}</div>
-                  <div className="mt-1 text-[10px] text-zinc-600 dark:text-zinc-300">task: {wt.task}</div>
+                  <div className="font-mono text-[11px] font-semibold text-zinc-800 dark:text-zinc-100">
+                    {wt.name}
+                  </div>
+                  <div className="font-mono text-[10px] text-zinc-500 dark:text-zinc-400">
+                    {wt.branch}
+                  </div>
+                  <div className="mt-1 text-[10px] text-zinc-600 dark:text-zinc-300">
+                    task: {wt.task}
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -242,7 +340,9 @@ export default function WorktreeTaskIsolation({ title }: { title?: string }) {
                       : "border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900"
                   }`}
                 >
-                  <div className="font-mono text-[11px] font-semibold text-zinc-800 dark:text-zinc-100">{lane.name}</div>
+                  <div className="font-mono text-[11px] font-semibold text-zinc-800 dark:text-zinc-100">
+                    {lane.name}
+                  </div>
                   <div className="mt-1 space-y-1 font-mono text-[10px] text-zinc-500 dark:text-zinc-400">
                     {lane.files.length === 0 ? (
                       <div>(no changes)</div>
@@ -257,7 +357,9 @@ export default function WorktreeTaskIsolation({ title }: { title?: string }) {
         </div>
 
         <div className="mt-4 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800/60">
-          <div className="font-medium text-zinc-800 dark:text-zinc-100">{step.title}</div>
+          <div className="font-medium text-zinc-800 dark:text-zinc-100">
+            {step.title}
+          </div>
           <div className="text-zinc-600 dark:text-zinc-300">{step.desc}</div>
         </div>
       </div>

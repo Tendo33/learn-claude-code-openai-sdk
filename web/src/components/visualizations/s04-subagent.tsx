@@ -13,7 +13,11 @@ interface MessageBlock {
 const PARENT_BASE_MESSAGES: MessageBlock[] = [
   { id: "p1", label: "user: Build login + tests", color: "bg-blue-500" },
   { id: "p2", label: "assistant: Planning approach...", color: "bg-zinc-600" },
-  { id: "p3", label: "tool_result: project structure", color: "bg-emerald-500" },
+  {
+    id: "p3",
+    label: "tool_result: project structure",
+    color: "bg-emerald-500",
+  },
 ];
 
 const TASK_PROMPT: MessageBlock = {
@@ -51,8 +55,7 @@ const STEPS = [
   },
   {
     title: "Compress Result",
-    description:
-      "The child's full conversation compresses into one summary.",
+    description: "The child's full conversation compresses into one summary.",
   },
   {
     title: "Return Summary",
@@ -75,7 +78,10 @@ export default function SubagentIsolation({ title }: { title?: string }) {
     reset,
     isPlaying,
     toggleAutoPlay,
-  } = useSteppedVisualization({ totalSteps: STEPS.length, autoPlayInterval: 2500 });
+  } = useSteppedVisualization({
+    totalSteps: STEPS.length,
+    autoPlayInterval: 2500,
+  });
 
   // Derive what to show in each container based on step
   const parentMessages: MessageBlock[] = (() => {
@@ -107,7 +113,8 @@ export default function SubagentIsolation({ title }: { title?: string }) {
         {title || "Subagent Context Isolation"}
       </h2>
 
-      <div className="rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900"
+      <div
+        className="rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900"
         style={{ minHeight: 500 }}
       >
         {/* Main layout: two containers side by side */}
@@ -131,7 +138,10 @@ export default function SubagentIsolation({ title }: { title?: string }) {
                     initial={{ opacity: 0, x: -12 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -12 }}
-                    transition={{ duration: 0.4, delay: msg.id === "summary" ? 0.3 : 0 }}
+                    transition={{
+                      duration: 0.4,
+                      delay: msg.id === "summary" ? 0.3 : 0,
+                    }}
                     className={`rounded-lg px-3 py-2 text-xs font-medium text-white shadow-sm ${msg.color}`}
                   >
                     {msg.label}
@@ -208,9 +218,7 @@ export default function SubagentIsolation({ title }: { title?: string }) {
                 animate={{ opacity: 1 }}
                 className="flex h-24 items-center justify-center rounded-lg border border-dashed border-zinc-200 dark:border-zinc-700"
               >
-                <span className="text-xs text-zinc-400">
-                  not yet spawned
-                </span>
+                <span className="text-xs text-zinc-400">not yet spawned</span>
               </motion.div>
             )}
 

@@ -23,7 +23,8 @@ const TOOLS: ToolDef[] = [
     color: "border-orange-300 bg-orange-50",
     activeColor: "border-orange-500 bg-orange-100 ring-2 ring-orange-400",
     darkColor: "dark:border-zinc-700 dark:bg-zinc-800/50",
-    darkActiveColor: "dark:border-orange-500 dark:bg-orange-950/40 dark:ring-orange-500",
+    darkActiveColor:
+      "dark:border-orange-500 dark:bg-orange-950/40 dark:ring-orange-500",
   },
   {
     name: "read_file",
@@ -39,7 +40,8 @@ const TOOLS: ToolDef[] = [
     color: "border-emerald-300 bg-emerald-50",
     activeColor: "border-emerald-500 bg-emerald-100 ring-2 ring-emerald-400",
     darkColor: "dark:border-zinc-700 dark:bg-zinc-800/50",
-    darkActiveColor: "dark:border-emerald-500 dark:bg-emerald-950/40 dark:ring-emerald-500",
+    darkActiveColor:
+      "dark:border-emerald-500 dark:bg-emerald-950/40 dark:ring-emerald-500",
   },
   {
     name: "edit_file",
@@ -47,7 +49,8 @@ const TOOLS: ToolDef[] = [
     color: "border-violet-300 bg-violet-50",
     activeColor: "border-violet-500 bg-violet-100 ring-2 ring-violet-400",
     darkColor: "dark:border-zinc-700 dark:bg-zinc-800/50",
-    darkActiveColor: "dark:border-violet-500 dark:bg-violet-950/40 dark:ring-violet-500",
+    darkActiveColor:
+      "dark:border-violet-500 dark:bg-violet-950/40 dark:ring-violet-500",
   },
 ];
 
@@ -66,12 +69,30 @@ const REQUEST_PER_STEP: (string | null)[] = [
 
 // Step annotations
 const STEP_INFO = [
-  { title: "The Dispatch Map", desc: "A dictionary maps tool names to handler functions. The loop code never changes." },
-  { title: "Route: bash", desc: "tool_call.name -> handlers['bash'](input). Name-based routing." },
-  { title: "Route: read_file", desc: "Same pattern, different handler. Validate input, execute, return result." },
-  { title: "Route: write_file", desc: "Every tool returns a tool_result that goes back into messages[]." },
-  { title: "Route: edit_file", desc: "Adding a new tool = adding one entry to the dispatch map." },
-  { title: "The Key Insight", desc: "The while loop stays the same. You only grow the dispatch map. That's it." },
+  {
+    title: "The Dispatch Map",
+    desc: "A dictionary maps tool names to handler functions. The loop code never changes.",
+  },
+  {
+    title: "Route: bash",
+    desc: "tool_call.name -> handlers['bash'](input). Name-based routing.",
+  },
+  {
+    title: "Route: read_file",
+    desc: "Same pattern, different handler. Validate input, execute, return result.",
+  },
+  {
+    title: "Route: write_file",
+    desc: "Every tool returns a tool_result that goes back into messages[].",
+  },
+  {
+    title: "Route: edit_file",
+    desc: "Adding a new tool = adding one entry to the dispatch map.",
+  },
+  {
+    title: "The Key Insight",
+    desc: "The while loop stays the same. You only grow the dispatch map. That's it.",
+  },
 ];
 
 // SVG layout constants
@@ -165,19 +186,49 @@ export default function ToolDispatch({ title }: { title?: string }) {
         >
           <defs>
             <filter id="dispatch-glow">
-              <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#3b82f6" floodOpacity="0.6" />
+              <feDropShadow
+                dx="0"
+                dy="0"
+                stdDeviation="4"
+                floodColor="#3b82f6"
+                floodOpacity="0.6"
+              />
             </filter>
             <filter id="card-glow-orange">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#f97316" floodOpacity="0.6" />
+              <feDropShadow
+                dx="0"
+                dy="0"
+                stdDeviation="3"
+                floodColor="#f97316"
+                floodOpacity="0.6"
+              />
             </filter>
             <filter id="card-glow-sky">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#0ea5e9" floodOpacity="0.6" />
+              <feDropShadow
+                dx="0"
+                dy="0"
+                stdDeviation="3"
+                floodColor="#0ea5e9"
+                floodOpacity="0.6"
+              />
             </filter>
             <filter id="card-glow-emerald">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#10b981" floodOpacity="0.6" />
+              <feDropShadow
+                dx="0"
+                dy="0"
+                stdDeviation="3"
+                floodColor="#10b981"
+                floodOpacity="0.6"
+              />
             </filter>
             <filter id="card-glow-violet">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#8b5cf6" floodOpacity="0.6" />
+              <feDropShadow
+                dx="0"
+                dy="0"
+                stdDeviation="3"
+                floodColor="#8b5cf6"
+                floodOpacity="0.6"
+              />
             </filter>
             <marker
               id="dispatch-arrow"
@@ -211,7 +262,8 @@ export default function ToolDispatch({ title }: { title?: string }) {
             strokeWidth={2}
             animate={{
               fill: currentStep > 0 ? palette.activeNodeFill : palette.nodeFill,
-              stroke: currentStep > 0 ? palette.activeNodeStroke : palette.nodeStroke,
+              stroke:
+                currentStep > 0 ? palette.activeNodeStroke : palette.nodeStroke,
             }}
             filter={currentStep > 0 ? "url(#dispatch-glow)" : "none"}
             transition={{ duration: 0.4 }}
@@ -224,7 +276,9 @@ export default function ToolDispatch({ title }: { title?: string }) {
             fontSize={13}
             fontWeight={700}
             fontFamily="monospace"
-            animate={{ fill: currentStep > 0 ? palette.activeNodeText : palette.nodeText }}
+            animate={{
+              fill: currentStep > 0 ? palette.activeNodeText : palette.nodeText,
+            }}
             transition={{ duration: 0.4 }}
           >
             dispatch(name)
@@ -234,7 +288,9 @@ export default function ToolDispatch({ title }: { title?: string }) {
           {TOOLS.map((tool, i) => {
             const cardX = getCardX(i);
             const isActive = isAllActive || i === activeToolIdx;
-            const lineColor = isActive ? palette.activeEdgeStroke : palette.edgeStroke;
+            const lineColor = isActive
+              ? palette.activeEdgeStroke
+              : palette.edgeStroke;
 
             return (
               <motion.line
@@ -244,8 +300,13 @@ export default function ToolDispatch({ title }: { title?: string }) {
                 x2={cardX}
                 y2={CARD_Y - CARD_H / 2}
                 strokeWidth={isActive ? 2.5 : 1.5}
-                markerEnd={isActive ? "url(#dispatch-arrow)" : "url(#dispatch-arrow-dim)"}
-                animate={{ stroke: lineColor, strokeWidth: isActive ? 2.5 : 1.5 }}
+                markerEnd={
+                  isActive ? "url(#dispatch-arrow)" : "url(#dispatch-arrow-dim)"
+                }
+                animate={{
+                  stroke: lineColor,
+                  strokeWidth: isActive ? 2.5 : 1.5,
+                }}
                 transition={{ duration: 0.4 }}
               />
             );
@@ -300,7 +361,11 @@ export default function ToolDispatch({ title }: { title?: string }) {
                   dominantBaseline="middle"
                   fontSize={8}
                   fontFamily="sans-serif"
-                  animate={{ fill: isActive ? "rgba(255,255,255,0.8)" : palette.labelFill }}
+                  animate={{
+                    fill: isActive
+                      ? "rgba(255,255,255,0.8)"
+                      : palette.labelFill,
+                  }}
                   transition={{ duration: 0.4 }}
                 >
                   {tool.desc}
@@ -343,7 +408,8 @@ export default function ToolDispatch({ title }: { title?: string }) {
         {/* Code snippet below the diagram */}
         <div className="mt-3 rounded-md bg-zinc-100 px-3 py-2 dark:bg-zinc-800">
           <code className="block font-mono text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-300">
-            <span className="text-blue-600 dark:text-blue-400">const</span> handlers = {"{"}
+            <span className="text-blue-600 dark:text-blue-400">const</span>{" "}
+            handlers = {"{"}
             {TOOLS.map((tool, i) => {
               const isActive = isAllActive || i === activeToolIdx;
               return (
@@ -355,11 +421,13 @@ export default function ToolDispatch({ title }: { title?: string }) {
                   }}
                   className="text-zinc-600 dark:text-zinc-300"
                 >
-                  {" "}{tool.name},
+                  {" "}
+                  {tool.name},
                 </motion.span>
               );
             })}
-            {" }{"}{"}"};
+            {" }{"}
+            {"}"};
           </code>
         </div>
       </div>

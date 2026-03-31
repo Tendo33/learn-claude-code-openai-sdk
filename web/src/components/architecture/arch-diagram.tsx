@@ -23,7 +23,9 @@ interface ArchDiagramProps {
 }
 
 function getLayerColor(versionId: string): string {
-  const layer = LAYERS.find((l) => (l.versions as readonly string[]).includes(versionId));
+  const layer = LAYERS.find((l) =>
+    (l.versions as readonly string[]).includes(versionId)
+  );
   return layer?.color ?? "#71717a";
 }
 
@@ -31,8 +33,9 @@ function getLayerColorClasses(versionId: string): {
   border: string;
   bg: string;
 } {
-  const v =
-    versionsData.versions.find((v) => v.id === versionId) as { layer?: string } | undefined;
+  const v = versionsData.versions.find((v) => v.id === versionId) as
+    | { layer?: string }
+    | undefined;
   const layer = v?.layer;
   switch (layer) {
     case "tools":
@@ -150,52 +153,52 @@ export function ArchDiagram({ version }: ArchDiagramProps) {
               </div>
             )}
             <motion.div
-            key={cls.name}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.08, duration: 0.3 }}
-            className={cn(
-              "rounded-lg border-2 px-4 py-3 transition-colors",
-              isNew
-                ? cn(colorClasses.border, colorClasses.bg)
-                : "border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800/50"
-            )}
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <span
-                  className={cn(
-                    "font-mono text-sm font-semibold",
-                    isNew
-                      ? "text-zinc-900 dark:text-white"
-                      : "text-zinc-400 dark:text-zinc-500"
-                  )}
-                >
-                  {cls.name}
-                </span>
-                <p
-                  className={cn(
-                    "mt-0.5 text-xs",
-                    isNew
-                      ? "text-zinc-600 dark:text-zinc-300"
-                      : "text-zinc-400 dark:text-zinc-500"
-                  )}
-                >
-                  {CLASS_DESCRIPTIONS[cls.name] || ""}
-                </p>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-zinc-400 dark:text-zinc-500">
-                  {cls.introducedIn}
-                </span>
-                {isNew && (
-                  <span className="rounded-full bg-zinc-900 px-2 py-0.5 text-[10px] font-bold uppercase text-white dark:bg-white dark:text-zinc-900">
-                    NEW
+              key={cls.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.08, duration: 0.3 }}
+              className={cn(
+                "rounded-lg border-2 px-4 py-3 transition-colors",
+                isNew
+                  ? cn(colorClasses.border, colorClasses.bg)
+                  : "border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800/50"
+              )}
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <span
+                    className={cn(
+                      "font-mono text-sm font-semibold",
+                      isNew
+                        ? "text-zinc-900 dark:text-white"
+                        : "text-zinc-400 dark:text-zinc-500"
+                    )}
+                  >
+                    {cls.name}
                   </span>
-                )}
+                  <p
+                    className={cn(
+                      "mt-0.5 text-xs",
+                      isNew
+                        ? "text-zinc-600 dark:text-zinc-300"
+                        : "text-zinc-400 dark:text-zinc-500"
+                    )}
+                  >
+                    {CLASS_DESCRIPTIONS[cls.name] || ""}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-zinc-400 dark:text-zinc-500">
+                    {cls.introducedIn}
+                  </span>
+                  {isNew && (
+                    <span className="rounded-full bg-zinc-900 px-2 py-0.5 text-[10px] font-bold uppercase text-white dark:bg-white dark:text-zinc-900">
+                      NEW
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
           </div>
         );
       })}

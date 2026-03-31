@@ -19,11 +19,51 @@ interface FlowNode {
 
 const NODES: FlowNode[] = [
   { id: "start", label: "Start", x: 160, y: 30, w: 120, h: 40, type: "rect" },
-  { id: "api_call", label: "API Call", x: 160, y: 110, w: 120, h: 40, type: "rect" },
-  { id: "check", label: "stop_reason?", x: 160, y: 200, w: 140, h: 50, type: "diamond" },
-  { id: "execute", label: "Execute Tool", x: 160, y: 300, w: 120, h: 40, type: "rect" },
-  { id: "append", label: "Append Result", x: 160, y: 380, w: 120, h: 40, type: "rect" },
-  { id: "end", label: "Break / Done", x: 380, y: 200, w: 120, h: 40, type: "rect" },
+  {
+    id: "api_call",
+    label: "API Call",
+    x: 160,
+    y: 110,
+    w: 120,
+    h: 40,
+    type: "rect",
+  },
+  {
+    id: "check",
+    label: "stop_reason?",
+    x: 160,
+    y: 200,
+    w: 140,
+    h: 50,
+    type: "diamond",
+  },
+  {
+    id: "execute",
+    label: "Execute Tool",
+    x: 160,
+    y: 300,
+    w: 120,
+    h: 40,
+    type: "rect",
+  },
+  {
+    id: "append",
+    label: "Append Result",
+    x: 160,
+    y: 380,
+    w: 120,
+    h: 40,
+    type: "rect",
+  },
+  {
+    id: "end",
+    label: "Break / Done",
+    x: 380,
+    y: 200,
+    w: 120,
+    h: 40,
+    type: "rect",
+  },
 ];
 
 // Edges between nodes (SVG path data computed inline)
@@ -74,27 +114,80 @@ interface MessageBlock {
 
 const MESSAGES_PER_STEP: (MessageBlock | null)[][] = [
   [],
-  [{ role: "user", detail: "Fix the login bug", colorClass: "bg-blue-500 dark:bg-blue-600" }],
-  [],
-  [{ role: "assistant", detail: "tool_use: read_file", colorClass: "bg-zinc-600 dark:bg-zinc-500" }],
-  [{ role: "tool_result", detail: "auth.ts contents...", colorClass: "bg-emerald-500 dark:bg-emerald-600" }],
   [
-    { role: "assistant", detail: "tool_use: edit_file", colorClass: "bg-zinc-600 dark:bg-zinc-500" },
-    { role: "tool_result", detail: "file updated", colorClass: "bg-emerald-500 dark:bg-emerald-600" },
+    {
+      role: "user",
+      detail: "Fix the login bug",
+      colorClass: "bg-blue-500 dark:bg-blue-600",
+    },
   ],
-  [{ role: "assistant", detail: "end_turn: Done!", colorClass: "bg-purple-500 dark:bg-purple-600" }],
+  [],
+  [
+    {
+      role: "assistant",
+      detail: "tool_use: read_file",
+      colorClass: "bg-zinc-600 dark:bg-zinc-500",
+    },
+  ],
+  [
+    {
+      role: "tool_result",
+      detail: "auth.ts contents...",
+      colorClass: "bg-emerald-500 dark:bg-emerald-600",
+    },
+  ],
+  [
+    {
+      role: "assistant",
+      detail: "tool_use: edit_file",
+      colorClass: "bg-zinc-600 dark:bg-zinc-500",
+    },
+    {
+      role: "tool_result",
+      detail: "file updated",
+      colorClass: "bg-emerald-500 dark:bg-emerald-600",
+    },
+  ],
+  [
+    {
+      role: "assistant",
+      detail: "end_turn: Done!",
+      colorClass: "bg-purple-500 dark:bg-purple-600",
+    },
+  ],
 ];
 
 // -- Step annotations --
 
 const STEP_INFO = [
-  { title: "The While Loop", desc: "Every agent is a while loop that keeps calling the model until it says 'stop'." },
-  { title: "User Input", desc: "The loop starts when the user sends a message." },
-  { title: "Call the Model", desc: "Send all messages to the LLM. It sees everything and decides what to do." },
-  { title: "stop_reason: tool_use", desc: "The model wants to use a tool. The loop continues." },
-  { title: "Execute & Append", desc: "Run the tool, append the result to messages[]. Feed it back." },
-  { title: "Loop Again", desc: "Same code path, second iteration. The model decides to edit a file." },
-  { title: "stop_reason: end_turn", desc: "The model is done. Loop exits. That's the entire agent." },
+  {
+    title: "The While Loop",
+    desc: "Every agent is a while loop that keeps calling the model until it says 'stop'.",
+  },
+  {
+    title: "User Input",
+    desc: "The loop starts when the user sends a message.",
+  },
+  {
+    title: "Call the Model",
+    desc: "Send all messages to the LLM. It sees everything and decides what to do.",
+  },
+  {
+    title: "stop_reason: tool_use",
+    desc: "The model wants to use a tool. The loop continues.",
+  },
+  {
+    title: "Execute & Append",
+    desc: "Run the tool, append the result to messages[]. Feed it back.",
+  },
+  {
+    title: "Loop Again",
+    desc: "Same code path, second iteration. The model decides to edit a file.",
+  },
+  {
+    title: "stop_reason: end_turn",
+    desc: "The model is done. Loop exits. That's the entire agent.",
+  },
 ];
 
 // -- Helpers --
@@ -180,10 +273,22 @@ export default function AgentLoop({ title }: { title?: string }) {
             >
               <defs>
                 <filter id="glow-blue">
-                  <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#3b82f6" floodOpacity="0.7" />
+                  <feDropShadow
+                    dx="0"
+                    dy="0"
+                    stdDeviation="4"
+                    floodColor="#3b82f6"
+                    floodOpacity="0.7"
+                  />
                 </filter>
                 <filter id="glow-purple">
-                  <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#a855f7" floodOpacity="0.7" />
+                  <feDropShadow
+                    dx="0"
+                    dy="0"
+                    stdDeviation="4"
+                    floodColor="#a855f7"
+                    floodOpacity="0.7"
+                  />
                 </filter>
                 <marker
                   id="arrowhead"
@@ -203,7 +308,10 @@ export default function AgentLoop({ title }: { title?: string }) {
                   refY="3"
                   orient="auto"
                 >
-                  <polygon points="0 0, 8 3, 0 6" fill={palette.activeEdgeStroke} />
+                  <polygon
+                    points="0 0, 8 3, 0 6"
+                    fill={palette.activeEdgeStroke}
+                  />
                 </marker>
               </defs>
 
@@ -218,12 +326,18 @@ export default function AgentLoop({ title }: { title?: string }) {
                     <motion.path
                       d={d}
                       fill="none"
-                      stroke={isActive ? palette.activeEdgeStroke : palette.edgeStroke}
+                      stroke={
+                        isActive ? palette.activeEdgeStroke : palette.edgeStroke
+                      }
                       strokeWidth={isActive ? 2.5 : 1.5}
                       strokeDasharray={isActive ? "none" : "none"}
-                      markerEnd={isActive ? "url(#arrowhead-active)" : "url(#arrowhead)"}
+                      markerEnd={
+                        isActive ? "url(#arrowhead-active)" : "url(#arrowhead)"
+                      }
                       animate={{
-                        stroke: isActive ? palette.activeEdgeStroke : palette.edgeStroke,
+                        stroke: isActive
+                          ? palette.activeEdgeStroke
+                          : palette.edgeStroke,
                         strokeWidth: isActive ? 2.5 : 1.5,
                       }}
                       transition={{ duration: 0.4 }}
@@ -272,13 +386,23 @@ export default function AgentLoop({ title }: { title?: string }) {
                       <motion.polygon
                         points={points}
                         rx={6}
-                        fill={isActive ? palette.activeNodeFill : palette.nodeFill}
-                        stroke={isActive ? palette.activeNodeStroke : palette.nodeStroke}
+                        fill={
+                          isActive ? palette.activeNodeFill : palette.nodeFill
+                        }
+                        stroke={
+                          isActive
+                            ? palette.activeNodeStroke
+                            : palette.nodeStroke
+                        }
                         strokeWidth={1.5}
                         filter={filterAttr}
                         animate={{
-                          fill: isActive ? palette.activeNodeFill : palette.nodeFill,
-                          stroke: isActive ? palette.activeNodeStroke : palette.nodeStroke,
+                          fill: isActive
+                            ? palette.activeNodeFill
+                            : palette.nodeFill,
+                          stroke: isActive
+                            ? palette.activeNodeStroke
+                            : palette.nodeStroke,
                         }}
                         transition={{ duration: 0.4 }}
                       />
@@ -289,7 +413,11 @@ export default function AgentLoop({ title }: { title?: string }) {
                         fontSize={11}
                         fontWeight={600}
                         fontFamily="monospace"
-                        animate={{ fill: isActive ? palette.activeNodeText : palette.nodeText }}
+                        animate={{
+                          fill: isActive
+                            ? palette.activeNodeText
+                            : palette.nodeText,
+                        }}
                         transition={{ duration: 0.4 }}
                       >
                         {node.label}
@@ -306,13 +434,33 @@ export default function AgentLoop({ title }: { title?: string }) {
                       width={node.w}
                       height={node.h}
                       rx={8}
-                      fill={isActive ? (isEnd ? palette.endNodeFill : palette.activeNodeFill) : palette.nodeFill}
-                      stroke={isActive ? (isEnd ? palette.endNodeStroke : palette.activeNodeStroke) : palette.nodeStroke}
+                      fill={
+                        isActive
+                          ? isEnd
+                            ? palette.endNodeFill
+                            : palette.activeNodeFill
+                          : palette.nodeFill
+                      }
+                      stroke={
+                        isActive
+                          ? isEnd
+                            ? palette.endNodeStroke
+                            : palette.activeNodeStroke
+                          : palette.nodeStroke
+                      }
                       strokeWidth={1.5}
                       filter={filterAttr}
                       animate={{
-                        fill: isActive ? (isEnd ? palette.endNodeFill : palette.activeNodeFill) : palette.nodeFill,
-                        stroke: isActive ? (isEnd ? palette.endNodeStroke : palette.activeNodeStroke) : palette.nodeStroke,
+                        fill: isActive
+                          ? isEnd
+                            ? palette.endNodeFill
+                            : palette.activeNodeFill
+                          : palette.nodeFill,
+                        stroke: isActive
+                          ? isEnd
+                            ? palette.endNodeStroke
+                            : palette.activeNodeStroke
+                          : palette.nodeStroke,
                       }}
                       transition={{ duration: 0.4 }}
                     />
@@ -323,7 +471,11 @@ export default function AgentLoop({ title }: { title?: string }) {
                       fontSize={12}
                       fontWeight={600}
                       fontFamily="monospace"
-                      animate={{ fill: isActive ? palette.activeNodeText : palette.nodeText }}
+                      animate={{
+                        fill: isActive
+                          ? palette.activeNodeText
+                          : palette.nodeText,
+                      }}
                       transition={{ duration: 0.4 }}
                     >
                       {node.label}

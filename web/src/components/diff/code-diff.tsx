@@ -11,18 +11,30 @@ interface CodeDiffProps {
   newLabel: string;
 }
 
-export function CodeDiff({ oldSource, newSource, oldLabel, newLabel }: CodeDiffProps) {
+export function CodeDiff({
+  oldSource,
+  newSource,
+  oldLabel,
+  newLabel,
+}: CodeDiffProps) {
   const [viewMode, setViewMode] = useState<"unified" | "split">("unified");
 
-  const changes = useMemo(() => diffLines(oldSource, newSource), [oldSource, newSource]);
+  const changes = useMemo(
+    () => diffLines(oldSource, newSource),
+    [oldSource, newSource]
+  );
 
   return (
     <div>
       <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0 truncate text-sm text-zinc-500 dark:text-zinc-400">
-          <span className="font-medium text-zinc-700 dark:text-zinc-300">{oldLabel}</span>
+          <span className="font-medium text-zinc-700 dark:text-zinc-300">
+            {oldLabel}
+          </span>
           {" -> "}
-          <span className="font-medium text-zinc-700 dark:text-zinc-300">{newLabel}</span>
+          <span className="font-medium text-zinc-700 dark:text-zinc-300">
+            {newLabel}
+          </span>
         </div>
         <div className="flex shrink-0 rounded-lg border border-zinc-200 dark:border-zinc-700">
           <button
@@ -63,7 +75,12 @@ function UnifiedView({ changes }: { changes: Change[] }) {
   let oldLine = 1;
   let newLine = 1;
 
-  const rows: { oldNum: number | null; newNum: number | null; type: "add" | "remove" | "context"; text: string }[] = [];
+  const rows: {
+    oldNum: number | null;
+    newNum: number | null;
+    type: "add" | "remove" | "context";
+    text: string;
+  }[] = [];
 
   for (const change of changes) {
     const lines = change.value.replace(/\n$/, "").split("\n");
@@ -71,9 +88,19 @@ function UnifiedView({ changes }: { changes: Change[] }) {
       if (change.added) {
         rows.push({ oldNum: null, newNum: newLine++, type: "add", text: line });
       } else if (change.removed) {
-        rows.push({ oldNum: oldLine++, newNum: null, type: "remove", text: line });
+        rows.push({
+          oldNum: oldLine++,
+          newNum: null,
+          type: "remove",
+          text: line,
+        });
       } else {
-        rows.push({ oldNum: oldLine++, newNum: newLine++, type: "context", text: line });
+        rows.push({
+          oldNum: oldLine++,
+          newNum: newLine++,
+          type: "context",
+          text: line,
+        });
       }
     }
   }
@@ -97,8 +124,12 @@ function UnifiedView({ changes }: { changes: Change[] }) {
                 {row.newNum ?? ""}
               </td>
               <td className="w-4 select-none px-1 text-center">
-                {row.type === "add" && <span className="text-green-600 dark:text-green-400">+</span>}
-                {row.type === "remove" && <span className="text-red-600 dark:text-red-400">-</span>}
+                {row.type === "add" && (
+                  <span className="text-green-600 dark:text-green-400">+</span>
+                )}
+                {row.type === "remove" && (
+                  <span className="text-red-600 dark:text-red-400">-</span>
+                )}
               </td>
               <td className="whitespace-pre px-2">
                 <span
@@ -124,8 +155,16 @@ function SplitView({ changes }: { changes: Change[] }) {
   let newLine = 1;
 
   type SplitRow = {
-    left: { num: number | null; text: string; type: "remove" | "context" | "empty" };
-    right: { num: number | null; text: string; type: "add" | "context" | "empty" };
+    left: {
+      num: number | null;
+      text: string;
+      type: "remove" | "context" | "empty";
+    };
+    right: {
+      num: number | null;
+      text: string;
+      type: "add" | "context" | "empty";
+    };
   };
 
   const rows: SplitRow[] = [];
@@ -150,7 +189,11 @@ function SplitView({ changes }: { changes: Change[] }) {
           rows[lastUnfilled].right.type === "empty" &&
           rows[lastUnfilled].left.type === "remove"
         ) {
-          rows[lastUnfilled].right = { num: newLine++, text: line, type: "add" };
+          rows[lastUnfilled].right = {
+            num: newLine++,
+            text: line,
+            type: "add",
+          };
         } else {
           rows.push({
             left: { num: null, text: "", type: "empty" },
@@ -172,8 +215,10 @@ function SplitView({ changes }: { changes: Change[] }) {
   const cellClass = (type: string) =>
     cn(
       "whitespace-pre px-2",
-      type === "add" && "bg-green-50 text-green-800 dark:bg-green-950/30 dark:text-green-300",
-      type === "remove" && "bg-red-50 text-red-800 dark:bg-red-950/30 dark:text-red-300",
+      type === "add" &&
+        "bg-green-50 text-green-800 dark:bg-green-950/30 dark:text-green-300",
+      type === "remove" &&
+        "bg-red-50 text-red-800 dark:bg-red-950/30 dark:text-red-300",
       type === "context" && "text-zinc-700 dark:text-zinc-300",
       type === "empty" && "bg-zinc-50 dark:bg-zinc-900"
     );
@@ -187,7 +232,12 @@ function SplitView({ changes }: { changes: Change[] }) {
               <td className="w-10 select-none border-r border-zinc-200 px-2 text-right text-zinc-400 dark:border-zinc-700 dark:text-zinc-600">
                 {row.left.num ?? ""}
               </td>
-              <td className={cn("w-1/2 border-r border-zinc-200 dark:border-zinc-700", cellClass(row.left.type))}>
+              <td
+                className={cn(
+                  "w-1/2 border-r border-zinc-200 dark:border-zinc-700",
+                  cellClass(row.left.type)
+                )}
+              >
                 {row.left.text}
               </td>
               <td className="w-10 select-none border-r border-zinc-200 px-2 text-right text-zinc-400 dark:border-zinc-700 dark:text-zinc-600">

@@ -1,54 +1,41 @@
 # Learn Claude Code with OpenAI SDK
 
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-
 [English](./README.md) | [中文](./README_zh.md)
 
-This repository extends [shareAI-lab/learn-claude-code](https://github.com/shareAI-lab/learn-claude-code) with OpenAI SDK-specific implementations.
+This repository is an **OpenAI SDK port** of the [shareAI-lab/learn-claude-code](https://github.com/shareAI-lab/learn-claude-code) project. It provides a 12-stage evolution of agent harness mechanisms implemented using OpenAI's chat completions and tool-call APIs.
 
-## What is added in this repo
+## Project Structure
 
-- OpenAI SDK versions for each tutorial stage:
-  - `openai_v0_bash_agent.py`
-  - `openai_v1_basic_agent.py`
-  - `openai_v2_todo_agent.py`
-  - `openai_v3_subagent.py`
-  - `openai_v4_skills_agent.py`
-- OpenAI-compatible environment variable setup (`OPENAI_API_KEY`, `OPENAI_BASE_URL`, `MODEL_ID`).
-- Optional Logfire integration via extra dependency (`.[logfire]`), providing clear interaction records with the model.
-- Test scripts and CI workflow adapted for this OpenAI SDK version.
+- **`agents/`**: 12 stages of agent evolution (`s01` to `s12`).
+- **`agents/s_full.py`**: The integrated reference implementation.
+- **`web/`**: Learning portal (Next.js) for visualizing agents.
+- **`docs/`**: Multilingual documentation for each stage.
 
-## Quick start
+## Quick Start
 
-```bash
-cp .env.example .env
-pip install -e ".[logfire]"
-# or without logfire:
-# pip install -e .
-```
-[logfire](https://logfire.pydantic.dev/docs/) doc
+1. **Configure Environment**:
+   ```bash
+   cp .env.example .env
+   # Set OPENAI_API_KEY and OPENAI_BASE_URL
+   ```
 
-Run examples:
+2. **Install Dependencies**:
+   ```bash
+   pip install -e .
+   ```
 
-```bash
-python openai_v0_bash_agent.py
-python openai_v1_basic_agent.py
-python openai_v2_todo_agent.py
-python openai_v3_subagent.py
-python openai_v4_skills_agent.py
-```
+3. **Run Agent**:
+   ```bash
+   python agents/s_full.py
+   ```
 
-## Tests
+## Key Mechanisms Ported
 
-```bash
-python tests/test_unit.py
-```
-
-Integration tests:
-
-```bash
-TEST_API_KEY=your_key TEST_BASE_URL=https://api.openai.com/v1 TEST_MODEL=gpt-4o python tests/test_agent.py
-```
+- **s01-s05**: Core loop, Tool use, Planning, Subagents, Skills.
+- **s06**: Context compression (micro/auto/manual).
+- **s07-s08**: Persistent tasks and background threaded execution.
+- **s09-s11**: Multi-agent teams, handshakes, and autonomous task claiming.
+- **s12**: Worktree-level task isolation.
 
 ## License
 

@@ -223,7 +223,12 @@ export function ExecutionFlow({ version }: ExecutionFlowProps) {
           </defs>
 
           {flow.edges.map((edge, i) => (
-            <EdgePath key={`${edge.from}-${edge.to}`} edge={edge} nodes={flow.nodes} index={i} />
+            <EdgePath
+              key={`${edge.from}-${edge.to}`}
+              edge={edge}
+              nodes={flow.nodes}
+              index={i}
+            />
           ))}
 
           {flow.nodes.map((node, i) => (

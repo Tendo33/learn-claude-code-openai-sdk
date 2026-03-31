@@ -76,13 +76,34 @@ const NAG_FIRES_PER_STEP = [false, false, false, true, false, false, false];
 
 // Step annotations
 const STEP_INFO = [
-  { title: "The Plan", desc: "TodoWrite gives the model a visible plan. All tasks start as pending." },
-  { title: "Round 1 -- Idle", desc: "The model does work but doesn't touch its todos. The nag counter increments." },
-  { title: "Round 2 -- Still Idle", desc: "Two rounds without progress. Pressure builds." },
-  { title: "NAG!", desc: "Threshold reached! System message injected: 'You have pending tasks. Pick one up now!'" },
-  { title: "Task Complete", desc: "The model completes the task. Timer stays at 0 -- working on todos resets the counter." },
-  { title: "Self-Directed", desc: "Once the model learns the pattern, it picks up tasks voluntarily." },
-  { title: "Mission Accomplished", desc: "Visible plan + nag pressure = reliable task completion." },
+  {
+    title: "The Plan",
+    desc: "TodoWrite gives the model a visible plan. All tasks start as pending.",
+  },
+  {
+    title: "Round 1 -- Idle",
+    desc: "The model does work but doesn't touch its todos. The nag counter increments.",
+  },
+  {
+    title: "Round 2 -- Still Idle",
+    desc: "Two rounds without progress. Pressure builds.",
+  },
+  {
+    title: "NAG!",
+    desc: "Threshold reached! System message injected: 'You have pending tasks. Pick one up now!'",
+  },
+  {
+    title: "Task Complete",
+    desc: "The model completes the task. Timer stays at 0 -- working on todos resets the counter.",
+  },
+  {
+    title: "Self-Directed",
+    desc: "Once the model learns the pattern, it picks up tasks voluntarily.",
+  },
+  {
+    title: "Mission Accomplished",
+    desc: "Visible plan + nag pressure = reliable task completion.",
+  },
 ];
 
 // -- Column component --
@@ -104,7 +125,9 @@ function KanbanColumn({
         className={`rounded-t-lg px-3 py-2 text-center text-xs font-bold uppercase tracking-wider ${headerBg}`}
       >
         {title}
-        <span className={`ml-1.5 inline-flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold ${accentClass}`}>
+        <span
+          className={`ml-1.5 inline-flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold ${accentClass}`}
+        >
           {tasks.length}
         </span>
       </div>
@@ -129,13 +152,15 @@ function KanbanColumn({
 function TaskCard({ task }: { task: Task }) {
   const statusStyles: Record<TaskStatus, string> = {
     pending: "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400",
-    in_progress: "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300",
+    in_progress:
+      "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300",
     done: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
   };
 
   const borderStyles: Record<TaskStatus, string> = {
     pending: "border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800",
-    in_progress: "border-amber-300 bg-amber-50 dark:border-amber-700 dark:bg-amber-950/30",
+    in_progress:
+      "border-amber-300 bg-amber-50 dark:border-amber-700 dark:bg-amber-950/30",
     done: "border-emerald-300 bg-emerald-50 dark:border-emerald-700 dark:bg-emerald-950/30",
   };
 
@@ -168,7 +193,15 @@ function TaskCard({ task }: { task: Task }) {
 
 // -- Nag gauge --
 
-function NagGauge({ value, max, firing }: { value: number; max: number; firing: boolean }) {
+function NagGauge({
+  value,
+  max,
+  firing,
+}: {
+  value: number;
+  max: number;
+  firing: boolean;
+}) {
   const pct = Math.min((value / max) * 100, 100);
 
   const barColor =

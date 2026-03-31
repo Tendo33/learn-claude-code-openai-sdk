@@ -70,7 +70,7 @@ const STEPS = [
   {
     title: "Skill Invocation",
     description:
-      'The model recognizes a skill invocation and triggers the Skill tool.',
+      "The model recognizes a skill invocation and triggers the Skill tool.",
   },
   {
     title: "Layer 2: Full Injection",
@@ -103,10 +103,14 @@ export default function SkillLoading({ title }: { title?: string }) {
     reset,
     isPlaying,
     toggleAutoPlay,
-  } = useSteppedVisualization({ totalSteps: STEPS.length, autoPlayInterval: 2500 });
+  } = useSteppedVisualization({
+    totalSteps: STEPS.length,
+    autoPlayInterval: 2500,
+  });
 
   const tokenCount = TOKEN_STATES[currentStep];
-  const highlightedSkill = currentStep >= 1 && currentStep <= 3 ? 0 : currentStep >= 4 ? 1 : -1;
+  const highlightedSkill =
+    currentStep >= 1 && currentStep <= 3 ? 0 : currentStep >= 4 ? 1 : -1;
   const showFirstContent = currentStep >= 2;
   const showSecondContent = currentStep >= 4;
   const firstContentFaded = currentStep >= 5;
@@ -316,9 +320,9 @@ export default function SkillLoading({ title }: { title?: string }) {
                   exit={{ opacity: 0 }}
                   className="rounded border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-700 dark:border-amber-700 dark:bg-amber-900/20 dark:text-amber-300"
                 >
-                  The Skill tool returns content as a tool_result message.
-                  The model sees it in context and follows the instructions.
-                  No system prompt bloat.
+                  The Skill tool returns content as a tool_result message. The
+                  model sees it in context and follows the instructions. No
+                  system prompt bloat.
                 </motion.div>
               )}
             </AnimatePresence>

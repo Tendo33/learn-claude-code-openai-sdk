@@ -65,7 +65,9 @@ export default function HomePage() {
       {/* Core Pattern Section */}
       <section>
         <div className="mb-6 text-center">
-          <h2 className="text-2xl font-bold sm:text-3xl">{t("core_pattern")}</h2>
+          <h2 className="text-2xl font-bold sm:text-3xl">
+            {t("core_pattern")}
+          </h2>
           <p className="mt-2 text-[var(--color-text-secondary)]">
             {t("core_pattern_desc")}
           </p>
@@ -84,7 +86,9 @@ export default function HomePage() {
               <span className="text-orange-300">True</span>
               <span className="text-zinc-500">:</span>
               {"\n"}
-              <span className="text-zinc-300">{"    "}response = client.messages.</span>
+              <span className="text-zinc-300">
+                {"    "}response = client.messages.
+              </span>
               <span className="text-blue-400">create</span>
               <span className="text-zinc-500">(</span>
               <span className="text-zinc-300">messages=</span>
@@ -128,7 +132,9 @@ export default function HomePage() {
       {/* Message Flow Visualization */}
       <section>
         <div className="mb-6 text-center">
-          <h2 className="text-2xl font-bold sm:text-3xl">{t("message_flow")}</h2>
+          <h2 className="text-2xl font-bold sm:text-3xl">
+            {t("message_flow")}
+          </h2>
           <p className="mt-2 text-[var(--color-text-secondary)]">
             {t("message_flow_desc")}
           </p>
@@ -141,7 +147,9 @@ export default function HomePage() {
       {/* Learning Path Preview */}
       <section>
         <div className="mb-6 text-center">
-          <h2 className="text-2xl font-bold sm:text-3xl">{t("learning_path")}</h2>
+          <h2 className="text-2xl font-bold sm:text-3xl">
+            {t("learning_path")}
+          </h2>
           <p className="mt-2 text-[var(--color-text-secondary)]">
             {t("learning_path_desc")}
           </p>
@@ -185,7 +193,9 @@ export default function HomePage() {
       {/* Layer Overview */}
       <section>
         <div className="mb-6 text-center">
-          <h2 className="text-2xl font-bold sm:text-3xl">{t("layers_title")}</h2>
+          <h2 className="text-2xl font-bold sm:text-3xl">
+            {t("layers_title")}
+          </h2>
           <p className="mt-2 text-[var(--color-text-secondary)]">
             {t("layers_desc")}
           </p>

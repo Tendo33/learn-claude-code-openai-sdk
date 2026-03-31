@@ -41,10 +41,7 @@ function postProcessHtml(html: string): string {
   );
 
   // Mark the first blockquote as hero callout
-  html = html.replace(
-    /<blockquote>/,
-    '<blockquote class="hero-callout">'
-  );
+  html = html.replace(/<blockquote>/, '<blockquote class="hero-callout">');
 
   // Remove the h1 (it's redundant with the page header)
   html = html.replace(/<h1>.*?<\/h1>\n?/, "");
@@ -52,7 +49,8 @@ function postProcessHtml(html: string): string {
   // Fix ordered list counter for interrupted lists (ol start="N")
   html = html.replace(
     /<ol start="(\d+)">/g,
-    (_, start) => `<ol style="counter-reset:step-counter ${parseInt(start) - 1}">`
+    (_, start) =>
+      `<ol style="counter-reset:step-counter ${parseInt(start) - 1}">`
   );
 
   return html;

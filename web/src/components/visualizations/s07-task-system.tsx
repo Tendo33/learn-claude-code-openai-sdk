@@ -285,13 +285,7 @@ export default function TaskSystem({ title }: { title?: string }) {
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
-            <filter
-              id="glowGreen"
-              x="-30%"
-              y="-30%"
-              width="160%"
-              height="160%"
-            >
+            <filter id="glowGreen" x="-30%" y="-30%" width="160%" height="160%">
               <feGaussianBlur stdDeviation="3" result="blur" />
               <feFlood floodColor="#10b981" floodOpacity="0.3" result="color" />
               <feComposite in="color" in2="blur" operator="in" result="glow" />

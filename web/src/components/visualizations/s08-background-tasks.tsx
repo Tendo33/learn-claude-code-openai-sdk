@@ -18,8 +18,7 @@ const STEP_INFO: StepInfo[] = [
   },
   {
     title: "Main Thread Working",
-    description:
-      "The main agent loop runs as usual, processing user requests.",
+    description: "The main agent loop runs as usual, processing user requests.",
   },
   {
     title: "Spawn Background",
@@ -174,7 +173,11 @@ export default function BackgroundTasks({ title }: { title?: string }) {
       </h2>
 
       <div className="rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-700 dark:bg-zinc-900">
-        <svg viewBox="0 0 780 380" className="w-full" aria-label="Background task lanes">
+        <svg
+          viewBox="0 0 780 380"
+          className="w-full"
+          aria-label="Background task lanes"
+        >
           <defs>
             <marker
               id="forkArrow"
@@ -582,25 +585,37 @@ export default function BackgroundTasks({ title }: { title?: string }) {
         {/* Legend */}
         <div className="mt-3 flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-1.5">
-            <div className="h-3 w-3 rounded" style={{ background: "#8b5cf6" }} />
+            <div
+              className="h-3 w-3 rounded"
+              style={{ background: "#8b5cf6" }}
+            />
             <span className="text-[10px] text-zinc-500 dark:text-zinc-400">
               Main thread
             </span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="h-3 w-3 rounded" style={{ background: "#10b981" }} />
+            <div
+              className="h-3 w-3 rounded"
+              style={{ background: "#10b981" }}
+            />
             <span className="text-[10px] text-zinc-500 dark:text-zinc-400">
               Background 1
             </span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="h-3 w-3 rounded" style={{ background: "#3b82f6" }} />
+            <div
+              className="h-3 w-3 rounded"
+              style={{ background: "#3b82f6" }}
+            />
             <span className="text-[10px] text-zinc-500 dark:text-zinc-400">
               Background 2
             </span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="h-3 w-3 rounded" style={{ background: "#f59e0b" }} />
+            <div
+              className="h-3 w-3 rounded"
+              style={{ background: "#f59e0b" }}
+            />
             <span className="text-[10px] text-zinc-500 dark:text-zinc-400">
               LLM boundary
             </span>

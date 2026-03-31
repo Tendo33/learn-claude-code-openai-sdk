@@ -26,7 +26,9 @@ export function Sidebar() {
         {LAYERS.map((layer) => (
           <div key={layer.id}>
             <div className="flex items-center gap-1.5 pb-1.5">
-              <span className={cn("h-2 w-2 rounded-full", LAYER_DOT_BG[layer.id])} />
+              <span
+                className={cn("h-2 w-2 rounded-full", LAYER_DOT_BG[layer.id])}
+              />
               <span className="text-[11px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                 {tLayer(layer.id)}
               </span>

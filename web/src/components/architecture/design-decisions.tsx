@@ -63,7 +63,11 @@ function DecisionCard({
   const t = useTranslations("version");
 
   const localized =
-    locale !== "en" ? (decision as unknown as Record<string, unknown>)[locale] as { title?: string; description?: string } | undefined : undefined;
+    locale !== "en"
+      ? ((decision as unknown as Record<string, unknown>)[locale] as
+          | { title?: string; description?: string }
+          | undefined)
+      : undefined;
 
   const title = localized?.title || decision.title;
   const description = localized?.description || decision.description;

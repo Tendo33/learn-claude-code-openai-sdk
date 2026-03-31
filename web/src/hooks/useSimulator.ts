@@ -66,7 +66,14 @@ export function useSimulator(steps: SimStep[]) {
       setState((prev) => ({ ...prev, isPlaying: false }));
     }
     return () => clearTimer();
-  }, [state.isPlaying, state.currentIndex, state.speed, steps.length, stepForward, clearTimer]);
+  }, [
+    state.isPlaying,
+    state.currentIndex,
+    state.speed,
+    steps.length,
+    stepForward,
+    clearTimer,
+  ]);
 
   return {
     currentIndex: state.currentIndex,
