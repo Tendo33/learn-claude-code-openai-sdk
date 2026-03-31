@@ -69,9 +69,15 @@ from utils.logfire_config import configure_logfire
 load_dotenv(override=True)
 configure_logfire()
 
-# Initialize OpenAI client (uses OPENAI_API_KEY and OPENAI_BASE_URL env vars)
-client = OpenAI(base_url=os.getenv("OPENAI_BASE_URL"))
+client = None
 MODEL = os.getenv("MODEL_ID", "gpt-4o")
+
+def get_client():
+    """Lazily create the OpenAI client to avoid import-time API key errors."""
+    global client
+    if client is None:
+        client = OpenAI(base_url=os.getenv("OPENAI_BASE_URL"))
+    return client
 
 # The ONE tool that does everything
 # OpenAI format: wrapped in {"type": "function", "function": {...}}
@@ -141,7 +147,7 @@ def chat(prompt, history=None):
     while True:
         # 1. Call the model with tools
         # OpenAI: system prompt goes in messages, not as separate param
-        response = client.chat.completions.create(
+        response = get_client().chat.completions.create(
             model=MODEL,
             messages=[{"role": "system", "content": SYSTEM}] + history,
             tools=TOOL,

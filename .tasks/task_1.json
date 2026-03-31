@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "subject": "Execute multi-step background and teammate workflow",
+  "description": "1. Create background task that sleeps for 2 seconds and echoes 'bg_done'\n2. While waiting, spawn a teammate named 'tester' with role 'QA'\n3. Have the teammate create a task on the task board\n4. Then ask the teammate to voluntarily shutdown\n5. Check the background task status",
+  "status": "completed",
+  "owner": null,
+  "blockedBy": []
+}
