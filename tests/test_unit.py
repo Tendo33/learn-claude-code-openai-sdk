@@ -18,12 +18,11 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 def test_imports():
     """Test that all agent modules can be imported."""
     agents = [
-        "openai_v0_bash_agent",
-        "openai_v0_bash_agent_mini",
-        "openai_v1_basic_agent",
-        "openai_v2_todo_agent",
-        "openai_v3_subagent",
-        "openai_v4_skills_agent",
+        "agents.s01_agent_loop",
+        "agents.s02_tool_use",
+        "agents.s03_todo_write",
+        "agents.s04_subagent",
+        "agents.s05_skill_loading",
     ]
 
     for agent in agents:
@@ -41,7 +40,7 @@ def test_imports():
 
 def test_todo_manager_basic():
     """Test TodoManager basic operations."""
-    from openai_v2_todo_agent import TodoManager
+    from agents.s03_todo_write import TodoManager
 
     tm = TodoManager()
     result = tm.update(
@@ -61,7 +60,7 @@ def test_todo_manager_basic():
 
 def test_todo_manager_constraints():
     """Test TodoManager enforces constraints."""
-    from openai_v2_todo_agent import TodoManager
+    from agents.s03_todo_write import TodoManager
 
     tm = TodoManager()
 
@@ -97,7 +96,7 @@ def test_todo_manager_constraints():
 
 def test_reminder_constants():
     """Test reminder constants are defined correctly."""
-    from openai_v2_todo_agent import INITIAL_REMINDER, NAG_REMINDER
+    from agents.s03_todo_write import INITIAL_REMINDER, NAG_REMINDER
 
     assert "<reminder>" in INITIAL_REMINDER
     assert "</reminder>" in INITIAL_REMINDER
@@ -111,7 +110,7 @@ def test_reminder_constants():
 
 def test_nag_reminder_in_agent_loop():
     """Test NAG_REMINDER injection is inside agent_loop."""
-    from openai_v2_todo_agent import agent_loop
+    from agents.s03_todo_write import agent_loop
 
     source = inspect.getsource(agent_loop)
 
@@ -129,7 +128,7 @@ def test_nag_reminder_in_agent_loop():
 
 def test_tool_schemas():
     """Test v1 tool schemas are valid in OpenAI format."""
-    from openai_v1_basic_agent import TOOLS
+    from agents.s02_tool_use import TOOLS
 
     wrapped = [t["function"] for t in TOOLS]
     required_tools = {"bash", "read_file", "write_file", "edit_file"}
@@ -153,7 +152,7 @@ def test_tool_schemas():
 
 def test_todo_manager_empty_list():
     """Test TodoManager handles empty list."""
-    from openai_v2_todo_agent import TodoManager
+    from agents.s03_todo_write import TodoManager
 
     tm = TodoManager()
     result = tm.update([])
@@ -165,7 +164,7 @@ def test_todo_manager_empty_list():
 
 def test_todo_manager_status_transitions():
     """Test TodoManager status transitions."""
-    from openai_v2_todo_agent import TodoManager
+    from agents.s03_todo_write import TodoManager
 
     tm = TodoManager()
     tm.update([{"content": "Task", "status": "pending", "activeForm": "Doing task"}])
@@ -183,7 +182,7 @@ def test_todo_manager_status_transitions():
 
 def test_todo_manager_missing_fields():
     """Test TodoManager rejects items with missing fields."""
-    from openai_v2_todo_agent import TodoManager
+    from agents.s03_todo_write import TodoManager
 
     tm = TodoManager()
 
@@ -205,7 +204,7 @@ def test_todo_manager_missing_fields():
 
 def test_todo_manager_invalid_status():
     """Test TodoManager rejects invalid status values."""
-    from openai_v2_todo_agent import TodoManager
+    from agents.s03_todo_write import TodoManager
 
     tm = TodoManager()
     try:
@@ -220,7 +219,7 @@ def test_todo_manager_invalid_status():
 
 def test_todo_manager_render_format():
     """Test TodoManager render format."""
-    from openai_v2_todo_agent import TodoManager
+    from agents.s03_todo_write import TodoManager
 
     tm = TodoManager()
     tm.update(
@@ -247,7 +246,7 @@ def test_todo_manager_render_format():
 
 def test_v3_agent_types_structure():
     """Test v3 AGENT_TYPES structure."""
-    from openai_v3_subagent import AGENT_TYPES
+    from agents.s04_subagent import AGENT_TYPES
 
     required_types = {"explore", "code", "plan"}
     assert set(AGENT_TYPES.keys()) == required_types
@@ -263,7 +262,7 @@ def test_v3_agent_types_structure():
 
 def test_v3_get_tools_for_agent():
     """Test v3 get_tools_for_agent filters correctly."""
-    from openai_v3_subagent import BASE_TOOLS, get_tools_for_agent
+    from agents.s04_subagent import BASE_TOOLS, get_tools_for_agent
 
     explore_tools = get_tools_for_agent("explore")
     explore_names = {t["function"]["name"] for t in explore_tools}
@@ -285,7 +284,7 @@ def test_v3_get_tools_for_agent():
 
 def test_v3_get_agent_descriptions():
     """Test v3 get_agent_descriptions output."""
-    from openai_v3_subagent import get_agent_descriptions
+    from agents.s04_subagent import get_agent_descriptions
 
     desc = get_agent_descriptions()
     assert "explore" in desc
@@ -299,7 +298,7 @@ def test_v3_get_agent_descriptions():
 
 def test_v3_task_tool_schema():
     """Test v3 Task tool schema."""
-    from openai_v3_subagent import AGENT_TYPES, TASK_TOOL
+    from agents.s04_subagent import AGENT_TYPES, TASK_TOOL
 
     task_fn = TASK_TOOL["function"]
     assert task_fn["name"] == "Task"
@@ -322,7 +321,7 @@ def test_v4_skill_loader_init():
     import tempfile
     from pathlib import Path
 
-    from openai_v4_skills_agent import SkillLoader
+    from agents.s05_skill_loading import SkillLoader
 
     with tempfile.TemporaryDirectory() as tmpdir:
         loader = SkillLoader(Path(tmpdir))
@@ -337,7 +336,7 @@ def test_v4_skill_loader_parse_valid():
     import tempfile
     from pathlib import Path
 
-    from openai_v4_skills_agent import SkillLoader
+    from agents.s05_skill_loading import SkillLoader
 
     with tempfile.TemporaryDirectory() as tmpdir:
         skill_dir = Path(tmpdir) / "test-skill"
@@ -368,7 +367,7 @@ def test_v4_skill_loader_parse_invalid():
     import tempfile
     from pathlib import Path
 
-    from openai_v4_skills_agent import SkillLoader
+    from agents.s05_skill_loading import SkillLoader
 
     with tempfile.TemporaryDirectory() as tmpdir:
         skill_dir = Path(tmpdir) / "bad-skill"
@@ -387,7 +386,7 @@ def test_v4_skill_loader_get_content():
     import tempfile
     from pathlib import Path
 
-    from openai_v4_skills_agent import SkillLoader
+    from agents.s05_skill_loading import SkillLoader
 
     with tempfile.TemporaryDirectory() as tmpdir:
         skill_dir = Path(tmpdir) / "demo"
@@ -425,7 +424,7 @@ def test_v4_skill_loader_list_skills():
     import tempfile
     from pathlib import Path
 
-    from openai_v4_skills_agent import SkillLoader
+    from agents.s05_skill_loading import SkillLoader
 
     with tempfile.TemporaryDirectory() as tmpdir:
         for name in ["alpha", "beta"]:
@@ -453,7 +452,7 @@ Content for {name}
 
 def test_v4_skill_tool_schema():
     """Test v4 Skill tool schema."""
-    from openai_v4_skills_agent import SKILL_TOOL
+    from agents.s05_skill_loading import SKILL_TOOL
 
     skill_fn = SKILL_TOOL["function"]
     assert skill_fn["name"] == "Skill"
@@ -471,10 +470,10 @@ def test_v4_skill_tool_schema():
 
 def test_v3_safe_path():
     """Test v3 safe_path prevents path traversal."""
-    from openai_v3_subagent import WORKDIR, safe_path
+    from agents.s04_subagent import WORKDIR, safe_path
 
     p = safe_path("test.txt")
-    assert str(p).startswith(str(WORKDIR))
+    assert p.is_relative_to(WORKDIR)
 
     try:
         safe_path("../../../etc/passwd")

@@ -45,6 +45,12 @@ import time
 import uuid
 from pathlib import Path
 from queue import Queue
+import sys
+
+# Ensure root is in sys.path
+root_dir = Path(__file__).parent.parent
+if str(root_dir) not in sys.path:
+    sys.path.insert(0, str(root_dir))
 
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -713,9 +719,27 @@ TOOLS = [
 ]
 
 
+# === SECTION: debugging ===
+def print_history(messages: list):
+    """Debug helper to print current message history."""
+    print("\n--- [CONVERSATION HISTORY] ---")
+    for msg in messages:
+        role = msg["role"].upper()
+        content = str(msg.get("content", ""))
+        if len(content) > 200:
+            content = content[:200] + "..."
+        if "tool_calls" in msg:
+            content += f" [tool_calls: {len(msg['tool_calls'])}]"
+        print(f"[{role}] {content}")
+    print("------------------------------\n")
+
+
 # === SECTION: agent_loop ===
 def agent_loop(messages: list):
     rounds_without_todo = 0
+    # User requested: add print history message to fix
+    print_history(messages)
+    
     while True:
         # s06: compression pipeline
         microcompact(messages)
@@ -743,7 +767,11 @@ def agent_loop(messages: list):
         
         message = response.choices[0].message
         if message.content:
-            print(message.content)
+            print(f"\nAssistant: {message.content}")
+        elif response.choices[0].finish_reason == "tool_calls":
+            print("\nAssistant: (calling tools...)")
+        else:
+            print("\nAssistant: (done)")
             
         if response.choices[0].finish_reason != "tool_calls":
             messages.append({"role": "assistant", "content": message.content or ""})
