@@ -13,3 +13,7 @@ dependencies = [
 logfire = [
     "logfire",
 ]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["agents*", "skills*", "utils*", "web*"]
